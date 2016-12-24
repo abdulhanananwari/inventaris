@@ -1,0 +1,57 @@
+<div class="row">
+	<div class="col-sm-12">
+
+	<div class="well">
+		<div class="table-responsive">
+			<button class="btn btn-info btn-block" ui-sref="inventoriShow">Tambah Data</button><br>
+			<div class="input-group">
+			    <input type="text" ng-model='ctrl.filter.nama_inventaris'  class="form-control" placeholder="Search">
+			    <div class="input-group-btn">
+			      <button class="btn btn-default" type="submit" ng-click="ctrl.get()">
+			        <i class="glyphicon glyphicon-search"></i>
+			      </button>
+			    </div>
+ 			 </div>
+			<table class="table table-responsive table-hover" id="table">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Nama</th>
+						<th>Keterangan</th>
+						<th>Kondisi</th>
+						<th>Rencana Tanggal Peremajaan</th>
+						<th>Photo</th>
+						<th>Jumlah</th>
+						<th>Id Lokasi</th>
+						<th>Tanggal Pembelian</th>
+						<th>Estimasi NiLai Rupiah</th>
+						<th>Check Kondisi</th>
+						<th>Maintenance</th>
+						<th>PIC</th>
+						<th>Buka</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="inventori in ctrl.inventoris">
+						<td>{{inventori.id}}</td>
+						<td>{{inventori.nama_inventaris}}</td>
+						<td>{{inventori.keterangan}}</td>
+						<td>{{inventori.object_kondisi.name}}</td>
+						<td>{{inventori.rencana_tanggal_peremajaan}}</td>
+						<td>{{inventori.photos}}</td>
+						<td>{{inventori.jumlah}}</td>
+						<td>{{inventori.id_lokasi}}</td>
+						<td>{{inventori.tanggal_pembelian}}</td>
+						<td>{{inventori.estimasi_biaya}}</td>
+						<td>{{inventori.check_service}}</td>
+						<td>{{inventori.maintenance_inventori}}</td>
+						<td>{{inventori.name_pic}}</td>
+						<td><a class="btn btn-info"
+						ui-sref="inventoriShow({id: inventori.id})">Buka</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</div>
+	</div>
+</div>
