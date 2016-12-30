@@ -21,7 +21,7 @@ class OnCreateOrUpdate {
         }
         if ($this->inventori->tanggal_pembelian) {
 
-             $this->inventori->tanggal_pembelian = $request->get('tanggal_pembelian') \Carbon\Carbon::createFromFormat('Y-m-d', $this->inventori->tanggal_pembelian);
+             $this->inventori->tanggal_pembelian = $request->get('tanggal_pembelian') Carbon\Carbon::createFromFormat('Y-m-d', $this->inventori->tanggal_pembelian);
         }
       $this->location->save();
     }

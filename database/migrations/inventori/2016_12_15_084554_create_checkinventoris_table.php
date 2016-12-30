@@ -13,7 +13,7 @@ class CreateCheckinventorisTable extends Migration
      */
     public function up()
     {
-        Schema::create('checkInventoris', function (Blueprint $table) {
+        Schema::create('check_inventories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('reminder_id');
             $table->string('keterangan');
@@ -30,6 +30,6 @@ class CreateCheckinventorisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('checkinventoris');
+        Schema::dropIfExists('check_inventories');
     }
 }

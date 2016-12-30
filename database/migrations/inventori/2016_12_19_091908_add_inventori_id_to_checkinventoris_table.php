@@ -13,7 +13,7 @@ class AddInventoriIdToCheckinventorisTable extends Migration
      */
     public function up()
     {
-        Schema::table('checkinventoris', function (Blueprint $table) {
+        Schema::table('check_inventories', function (Blueprint $table) {
             $table->integer("inventori_id")->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddInventoriIdToCheckinventorisTable extends Migration
      */
     public function down()
     {
-        Schema::table('checkinventoris', function (Blueprint $table) {
+        Schema::table('check_inventories', function (Blueprint $table) {
             //
         });
     }
