@@ -1,21 +1,20 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocationsTable extends Migration
-{
+class CreateTenantDataTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('locations', function (Blueprint $table) {
+    public function up() {
+        Schema::create('tenant_data', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->integer('tenant_id')->unsigned();
+            $table->char('data_id', 5)->index();
             $table->timestamps();
         });
     }
@@ -25,8 +24,8 @@ class CreateLocationsTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('locations');
+    public function down() {
+        Schema::drop('tenant_data');
     }
+
 }

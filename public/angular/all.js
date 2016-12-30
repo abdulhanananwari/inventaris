@@ -112,30 +112,6 @@ app
 		return checkInventoriModel
 
 	})
-app
-	.factory('ConfigModel', function(
-		$http) {
-
-		var configModel = {}
-
-		var baseUrl = '/api/config/'
-
-		configModel.index = function(params) {
-			return $http.get(baseUrl, {'params': params})
-		}
-		configModel.get = function(id) {
-			return $http.get(baseUrl + id)
-		}
-		configModel.store = function(config) {
-			return $http.post(baseUrl, config)
-		}
-		configModel.update = function(id, config) {
-			return $http.post(baseUrl + id, config)
-		}
-
-		return configModel
-
-	})
 angular
 	.module('Solumax.AppTransfer', [])
 	.directive('appTransfer', function(
@@ -734,6 +710,30 @@ angular
 		$httpProvider.interceptors.push('TenantSelectionInterceptor');		
 	});;
 app
+	.factory('ConfigModel', function(
+		$http) {
+
+		var configModel = {}
+
+		var baseUrl = '/api/config/'
+
+		configModel.index = function(params) {
+			return $http.get(baseUrl, {'params': params})
+		}
+		configModel.get = function(id) {
+			return $http.get(baseUrl + id)
+		}
+		configModel.store = function(config) {
+			return $http.post(baseUrl, config)
+		}
+		configModel.update = function(id, config) {
+			return $http.post(baseUrl + id, config)
+		}
+
+		return configModel
+
+	})
+app
 	.controller('IndexController', function(){
 
 		var vm =this
@@ -889,6 +889,7 @@ app
 		vm.filter = {};
 
 		vm.get = function(page) {
+			
 			if (page) {
 				vm.filter.page = page;
 			}
@@ -896,13 +897,14 @@ app
 			InventoriModel.index(vm.filter)
 			.success(function(data) {
 
-				vm.inventoris =_.map(data.data, function(data)
-					{
-						data.name_pic=_.map(data.pic,'name').join(',')
-						return data
-					});
-				vm.meta =data.meta;
-				if (vm.meta.pagination && vm.meta.pagination.current_page > vm.meta.pagination.total_pages) {
+				vm.inventoris =_.map(data.data, function(data) {
+					data.name_pic=_.map(data.pic,'name').join(',')
+					return data
+				});
+
+				vm.meta = data.meta;
+
+				if (vm.meta.pagination && vm.meta.pagination.total_pages > 0 && vm.meta.pagination.current_page > vm.meta.pagination.total_pages) {
 					vm.get(1)
 				}
 
@@ -914,18 +916,17 @@ app
 		
 		function assignKondisiToInventori() {
 
-			ConfigModel.get('kondisi')
-			.success(function(data) {
-				vm.kondisi = data.data
-
-				_.each(vm.inventoris, function(inventori) {
-					inventori.object_kondisi = _.first(_.filter(vm.kondisi, function(kondisi) {
-						return kondisi.code == inventori.kondisi
-					}))
-				})
+			_.each(vm.inventoris, function(inventori) {
+				inventori.object_kondisi = _.first(_.filter(vm.kondisi, function(kondisi) {
+					return kondisi.code == inventori.kondisi
+				}))
 			})
 		}
 
+		ConfigModel.get('kondisi')
+		.success(function(data) {
+			vm.kondisi = data.data
+		})
 	});
 app
 	.controller('InventoriShowController', function (InventoriModel,
@@ -1033,18 +1034,6 @@ app
 	.controller('LocationIndexController', function(
 		LocationModel) {
 		var vm = this
-		vm.load = function() {
-
-			LocationModel.index()
-		.success(function(data) {
-			vm.locations = data.data;
-		
-		vm.storagelocation = {}
-
-			$('#edit-data').modal('hide')
-
-		})	
-		}
 
 		vm.new = function() {
 
@@ -1062,7 +1051,7 @@ app
 					
 					LocationModel.store(storagelocation)
 					.success(function(data) {
-						vm.load()
+						vm.get()
 
 					})
 
@@ -1070,33 +1059,30 @@ app
 
 				LocationModel.update(storagelocation.id, storagelocation)
 				.success(function(data) {
-					vm.load()
-					vm.storagelocation = data
+					vm.get()
+					vm.storagelocation = data.data
 					alert('Data Berhasil Di update')
 				})
 				
 			}
 
 		}
+
 		vm.edit = function(storagelocation) {
 			vm.storagelocation = storagelocation
 			$('#edit-data').modal('show')
 		}
-		vm.load()
 
 		vm.filter = {};
 
-		vm.get = function(page) {
-			if (page) {
-				vm.filter.page = page;
-			}
+		vm.get = function() {
 
 			LocationModel.index(vm.filter)
 			.success(function(data) {
 				vm.locations = data.data;
-				vm.meta =data.meta;
 			})
 		} 
+
 		vm.get();
 	});
 app

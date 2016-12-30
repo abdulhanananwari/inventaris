@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPicToInventorisTable extends Migration
+class CreateMaintenanceInventoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddPicToInventorisTable extends Migration
      */
     public function up()
     {
-        Schema::table('inventoris', function (Blueprint $table) {
-            $table->binary('pic')->nullable();
+        Schema::create('maintenance_inventories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +26,6 @@ class AddPicToInventorisTable extends Migration
      */
     public function down()
     {
-        Schema::table('inventoris', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('maintenance_inventories');
     }
 }

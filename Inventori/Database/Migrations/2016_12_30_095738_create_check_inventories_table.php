@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddMaintenanceserviceToInventorisTable extends Migration
+class CreateCheckInventoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddMaintenanceserviceToInventorisTable extends Migration
      */
     public function up()
     {
-        Schema::table('inventoris', function (Blueprint $table) {
-            $table->string('maintenance_inventori')->nullable();
+        Schema::create('check_inventories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +26,6 @@ class AddMaintenanceserviceToInventorisTable extends Migration
      */
     public function down()
     {
-        Schema::table('inventoris', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('check_inventories');
     }
 }
