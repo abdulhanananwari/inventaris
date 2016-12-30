@@ -17,7 +17,7 @@ class OnCreateOrUpdate {
 
         if ($this->inventori->rencana_tanggal_peremajaan) {
 
-        	$this->inventori->rencana_tanggal_peremajaan = $request->get('rencana_tanggal_peremajaan') \Carbon\Carbon::createFromFormat('Y-m-d', $this->inventori->rencana_tanggal_peremajaan));
+        	$this->inventori->rencana_tanggal_peremajaan = $request->get('rencana_tanggal_peremajaan') \Carbon\Carbon::createFromFormat('Y-m-d', $this->inventori->rencana_tanggal_peremajaan))
         }
         if ($this->inventori->tanggal_pembelian) {
 
