@@ -2,9 +2,12 @@ app
 	.controller('InventoriShowController', function (InventoriModel,
 		MaintenanceInventoriModel,
 		CheckInventoriModel,
+		LocationModel,
 		ConfigModel,
 		$state) {
 		var vm = this;
+
+		vm.location = {}
 
 		vm.inventori = {
 			tanggal_pembelian: moment().format("YYYY-MM-DD"),
@@ -96,6 +99,11 @@ app
 		ConfigModel.get('kondisi')
 		.success(function(data) {
 			vm.kondisi = data.data
+		})
+
+		LocationModel.get(location)
+		.success(function(data) {
+			vm.location = data.data
 		})
 
 	});

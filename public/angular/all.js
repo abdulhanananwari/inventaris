@@ -112,6 +112,30 @@ app
 		return checkInventoriModel
 
 	})
+app
+	.factory('ConfigModel', function(
+		$http) {
+
+		var configModel = {}
+
+		var baseUrl = '/api/config/'
+
+		configModel.index = function(params) {
+			return $http.get(baseUrl, {'params': params})
+		}
+		configModel.get = function(id) {
+			return $http.get(baseUrl + id)
+		}
+		configModel.store = function(config) {
+			return $http.post(baseUrl, config)
+		}
+		configModel.update = function(id, config) {
+			return $http.post(baseUrl + id, config)
+		}
+
+		return configModel
+
+	})
 angular
 	.module('Solumax.AppTransfer', [])
 	.directive('appTransfer', function(
@@ -710,30 +734,6 @@ angular
 		$httpProvider.interceptors.push('TenantSelectionInterceptor');		
 	});;
 app
-	.factory('ConfigModel', function(
-		$http) {
-
-		var configModel = {}
-
-		var baseUrl = '/api/config/'
-
-		configModel.index = function(params) {
-			return $http.get(baseUrl, {'params': params})
-		}
-		configModel.get = function(id) {
-			return $http.get(baseUrl + id)
-		}
-		configModel.store = function(config) {
-			return $http.post(baseUrl, config)
-		}
-		configModel.update = function(id, config) {
-			return $http.post(baseUrl + id, config)
-		}
-
-		return configModel
-
-	})
-app
 	.controller('IndexController', function(){
 
 		var vm =this
@@ -932,9 +932,12 @@ app
 	.controller('InventoriShowController', function (InventoriModel,
 		MaintenanceInventoriModel,
 		CheckInventoriModel,
+		LocationModel,
 		ConfigModel,
 		$state) {
 		var vm = this;
+
+		vm.location = {}
 
 		vm.inventori = {
 			tanggal_pembelian: moment().format("YYYY-MM-DD"),
@@ -1026,6 +1029,11 @@ app
 		ConfigModel.get('kondisi')
 		.success(function(data) {
 			vm.kondisi = data.data
+		})
+
+		LocationModel.get(location)
+		.success(function(data) {
+			vm.location = data.data
 		})
 
 	});
