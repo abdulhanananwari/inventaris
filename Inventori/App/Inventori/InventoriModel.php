@@ -6,7 +6,7 @@ use Solumax\PhpHelper\App\BaseModel as Model;
 
 class InventoriModel extends Model {
     
-    protected $table = 'inventoris';
+    protected $table = 'inventories';
     
     protected $guarded = ['created_at', 'updated_at'];
 
@@ -41,4 +41,9 @@ class InventoriModel extends Model {
     public function maintenanceInventori() {
         return $this->hasMany('Inventori\App\MaintenanceInventori\MaintenanceInventoriModel', 'inventori_id');
     }
+
+    public function location() {
+        return $this->belongsTo('Inventori\App\Location\LocationModel', 'id_lokasi');
+    }
+
 }

@@ -6,7 +6,7 @@ use Solumax\PhpHelper\App\BaseModel as Model;
 
 class MaintenanceInventoriModel extends Model {
     
-    protected $table = 'maintenances';
+    protected $table = 'maintenance_inventories';
     
     protected $guarded = ['created_at', 'updated_at'];
 

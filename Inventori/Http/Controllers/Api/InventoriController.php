@@ -17,7 +17,7 @@ class InventoriController extends Controller {
         $this->inventori = new InventoriModel();
         
         $this->transformer = new  InventoriTransformer();
-        $this->dataName = 'inventoris';
+        $this->dataName = 'inventories';
     }
     
     public function index(Request $request) {
@@ -25,9 +25,10 @@ class InventoriController extends Controller {
         $inventori = new InventoriModel();
         $query = $inventori->newQuery();
         
-        if ($request->has('nama_inventaris')) {
-            $query->where("nama_inventaris", "LIKE", "%" . $request->get('nama_inventaris') . "%");
+        if ($request->has('nama')) {
+            $query->where("nama", "LIKE", "%" . $request->get('nama') . "%");
         }
+
 
         $inventoris = $query->paginate(20);
         

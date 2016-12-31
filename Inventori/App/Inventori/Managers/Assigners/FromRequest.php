@@ -14,7 +14,7 @@ class FromRequest {
     
     public function assign(\Illuminate\Http\Request $request) {
         
-        $this->inventori->fill($request->only('id','nama_inventaris','keterangan','kondisi','jumlah','id_lokasi','estimasi_biaya','check_inventori','maintenance_inventori'));
+        $this->inventori->fill($request->only('id','nama','keterangan','kondisi','jumlah','id_lokasi','estimasi_biaya','jadwal_check_inventori','jadwal_maintenance_inventori'));
 
         
         if ($request->has('rencana_tanggal_peremajaan')) {

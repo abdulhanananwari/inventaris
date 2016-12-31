@@ -16,7 +16,7 @@ class MaintenanceInventoriController extends Controller {
         $this->maintenance = new MaintenanceInventoriModel();
         
         $this->transformer = new MaintenanceInventoriTransformer();
-        $this->dataName = 'maintenances';
+        $this->dataName = 'maintenance_inventories';
     }
     
     public function index(Request $request) {

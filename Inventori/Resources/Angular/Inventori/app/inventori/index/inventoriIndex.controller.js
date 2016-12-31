@@ -17,7 +17,7 @@ app
 			InventoriModel.index(vm.filter)
 			.success(function(data) {
 
-				vm.inventoris =_.map(data.data, function(data) {
+				vm.inventories =_.map(data.data, function(data) {
 					data.name_pic=_.map(data.pic,'name').join(',')
 					return data
 				});

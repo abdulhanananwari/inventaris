@@ -7,7 +7,7 @@ app
 		$state) {
 		var vm = this;
 
-		vm.location = {}
+		vm.storagelocation = {}
 
 		vm.inventori = {
 			tanggal_pembelian: moment().format("YYYY-MM-DD"),
@@ -23,15 +23,15 @@ app
 
 				InventoriModel.store(inventori)
 				.success(function(data) {
-					$state.go('inventoriIndex', {id: data.id})
+					alert('Data Berhasil Di Simpan')
+					$state.go('inventoriShow', {id: data.data.id})
 					
 				})
 			} else {
 				InventoriModel.update(inventori.id, inventori)
 				.success(function(data) {
-					vm.inventori = data
+					vm.inventori = data.data
 					alert('Data Berhasil Di Update')
-					$state.go('inventoriIndex', {id: data.id})
 				})
 			}
 		}
@@ -101,9 +101,9 @@ app
 			vm.kondisi = data.data
 		})
 
-		LocationModel.get(location)
+		LocationModel.index()
 		.success(function(data) {
-			vm.location = data.data
+			vm.locations = data.data;
 		})
 
 	});

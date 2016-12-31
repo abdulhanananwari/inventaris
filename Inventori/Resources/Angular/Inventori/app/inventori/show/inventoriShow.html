@@ -1,16 +1,14 @@
 <div class="row">
 	<div class="col-sm-12">
-		<div class="well">
 			<div class="row"><br><br>
 				<div ng-class="{'col-sm-6': ctrl.inventori.id != inventoriId, 'col-sm-12': ctrl.inventori.id == inventoriId }">
 					<div class="well">
-						<div class="form-group row">
-							<label class="col-xs-2 col-form-label">NAMA</label>
-								<div class="col-xs-10">
-									<input type="hidden" name="id">
-									<input class="form-control" type="text" name="nama_inventaris" ng-model="ctrl.inventori.nama_inventaris">
-								</div>
-						</div>
+
+						<h2>{{ ctrl.inventori.id ? "ID: " + ctrl.inventori.id : "Inventori Baru" }}</h2>
+
+						<label class="col-form-label">Nama</label>
+						<input class="form-control" type="text" ng-model="ctrl.inventori.nama">
+
 						<div class="form-group row">
 							<label class="col-xs-2 col-form-label">Keterangan</label>
 								<div class="col-xs-10">
@@ -37,15 +35,31 @@
 				  		<div class="form-group row">
 							<label class="col-xs-2 col-form-label">Jumlah</label>
 								<div class="col-xs-10">
-									<input class="form-control" type="text" name="jumlah" ng-model="ctrl.inventori.jumlah">
+									<input class="form-control" type="number" name="jumlah" ng-model="ctrl.inventori.jumlah">
 								</div>
 						</div>
-						<div class="form-group row">
-							<label class="col-xs-2 col-form-label">Id Lokasi</label>
-								<div class="col-xs-10">
-									<select class="form-control" ng-option="location.id as location.name for location in ctrl.location" ng-model="ctrl.inventori.id_lokasi"></select>
+					<div class="form-group row">
+						<label class="col-xs-2 col-form-label">ID Lokasi</label>
+						<div class="col-xs-10">
+							<div class="dropdown dropdown-scroll" ng-app="app">
+								    <button class="btn btn-default btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">{{'Lokasi: ' + ctrl.inventori.nama_lokasi || 'Lokasi Belum Dipilih' }} <span class="caret"></span>
+								      </button>
+								     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+								        <li role="presentation">
+								            <div class="input-group input-group-sm search-control">
+								             <span class="input-group-addon">
+								                    <span class="glyphicon glyphicon-search"></span>
+								              </span>
+								                <input type="text" name="id_lokasi" class="form-control" placeholder="Search Location" ng-model="x"></input>
+								            </div>
+								        </li4>
+								        	<li role="presentation" ng-click="ctrl.inventori.id_lokasi=storagelocation.id;ctrl.inventori.nama_lokasi=storagelocation.name" ng-repeat='storagelocation in ctrl.locations | filter:x'><a  >{{ storagelocation.name }}</a>
+								        </li>
+								    </ul>
 								</div>
+							</div>
 						</div>
+						<br>
 						<div class="form-group row">
 							<label class="col-xs-2 col-form-label">Tanggal Pembelian</label>
 								<div class="col-xs-10">
@@ -55,19 +69,19 @@
 						<div class="form-group row">
 							<label class="col-xs-2 col-form-label">Estimasi Nilai Rupiah</label>
 								<div class="col-xs-10">
-									<input class="form-control" type="text" name="estimasi_biaya" ng-model="ctrl.inventori.estimasi_biaya">
+									<input class="form-control" type="number" name="estimasi_biaya" ng-model="ctrl.inventori.estimasi_biaya">
 								</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-xs-2 col-form-label">Jadwal Chek Inventaris</label>
 								<div class="col-xs-10">
-									<input class="form-control" type="text" name="check_service" ng-model="ctrl.inventori.check_service">
+									<input class="form-control" type="number" name="check_service" ng-model="ctrl.inventori.check_service">
 								</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-xs-2 col-form-label">Jadwal Maintenance Inventaris</label>
 								<div class="col-xs-10">
-									<input class="form-control" type="text" name="maintenance_inventori" ng-model="ctrl.inventori.maintenance_inventori">
+									<input class="form-control" type="number" name="jadwal_maintenance_inventori" ng-model="ctrl.inventori.jadwal_maintenance_inventori">
 								</div>
 						</div>
 						<div class="form-group row">
@@ -110,7 +124,7 @@
 					<div class="well">
 					<div class="table-responsive">
 					<h4>Maintenance Inventori</h4><hr>
-					<div ng-if="ctrl.inventori.jumlah_hari_sejak_maintenance_inventori_terakhir >ctrl.inventori.maintenance_inventori"
+					<div ng-if="ctrl.inventori.jumlah_hari_sejak_maintenance_inventori_terakhir >ctrl.inventori.jadwal_maintenance_inventori"
 							class="alert alert-danger" role="alert">
 							Saatnya Untuk Melakukan Maintenance Inventori Lagi!
 						</div>
@@ -128,7 +142,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="maintenance in ctrl.maintenances">
+									<tr ng-repeat="maintenance in ctrl.maintenance_inventories">
 										<td>{{maintenance.id}}</td>
 										<td>{{maintenance.reminder_id}}</td>
 										<td>{{maintenance.nama_maintenance}}</td>
@@ -165,7 +179,7 @@
 				<div class="well">
 					<div class="table-responsive">
 						<h4>Check Inventori</h4><hr>
-						<div ng-if="ctrl.inventori.jumlah_hari_sejak_pengecekan_inventori_terakhir > ctrl.inventori.check_inventori"
+						<div ng-if="ctrl.inventori.jumlah_hari_sejak_pengecekan_inventori_terakhir > ctrl.inventori.jadwal_check_inventori"
 							class="alert alert-danger" role="alert">
 							Saatnya Untuk Melakukan Check Inventori Lagi!
 						</div>
@@ -181,7 +195,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="checkInventori in ctrl.checkInventoris">
+									<tr ng-repeat="checkInventori in ctrl.check_inventories">
 										<td>{{checkInventori.id}}</td>
 										<td>{{checkInventori.reminder_id}}</td>
 										<td>{{checkInventori.keterangan}}</td>
@@ -213,6 +227,20 @@
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 </div>
+<style type="text/css">
+	.dropdown.dropdown-scroll .dropdown-menu {
+    max-height: 200px;
+    /*width: 60px;*/
+    overflow: auto;
+		}
+	.search-control {
+    padding: 5px 10px;
+	}
+</style>
+<script type="text/javascript">
+	$('.dropdown-menu').find('input').click(function (e) {
+    e.stopPropagation();
+});
+</script>

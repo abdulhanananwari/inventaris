@@ -14,7 +14,7 @@ class AddCheckserviceToInventorisTable extends Migration
     public function up()
     {
         Schema::table('inventoris', function (Blueprint $table) {
-            $table->string('check_inventori')->nullable();
+            $table->string('jadwal_check_inventori')->nullable();
         });
     }
 

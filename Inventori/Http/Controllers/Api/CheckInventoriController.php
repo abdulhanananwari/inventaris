@@ -17,7 +17,7 @@ class CheckInventoriController extends Controller {
         $this->checkInventori = new CheckInventoriModel();
         
         $this->transformer = new  CheckInventoriTransformer();
-        $this->dataName = 'checkInventoris';
+        $this->dataName = 'check_inventories';
     }
     
     public function index(Request $request) {

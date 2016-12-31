@@ -10,7 +10,7 @@ Route::group(['prefix' => 'trigger', 'middleware' => $middleware], function() {
 
 			foreach ($inventoris as $inventori) {
 				
-				if($inventori->calculate()->JumlahHariSejakMaintenanceTerakhir() > $inventori->maintenance_inventori) {
+				if($inventori->calculate()->JumlahHariSejakMaintenanceTerakhir() > $inventori->jadwal_maintenance_inventori) {
 
 					$inventori->email()->maintenanceReminder();
 				}
@@ -23,7 +23,7 @@ Route::group(['prefix' => 'trigger', 'middleware' => $middleware], function() {
 
 			foreach ($inventoris as $inventori) {
 				
-				if ($inventori->calculate()->JumlahHariSejakCheckTerakhir() > $inventori->check_inventori) {
+				if ($inventori->calculate()->JumlahHariSejakCheckTerakhir() > $inventori->jadwal_check_inventori) {
 					
 					$inventori->email()->checkInventoriReminder();
 				}

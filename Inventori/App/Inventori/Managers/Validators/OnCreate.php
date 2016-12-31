@@ -20,31 +20,20 @@ class OnCreate{
           return $attributeValidation->errors()->all();
         }
 
-        if (!$this->cekNamaMasihBelumDipakai()) {
-          return ['Nama sudah dipakai'];
-        }
-
         return true;
     }
 
     protected function validateAttributes() {
 
       return \Validator::make($this->inventori->toArray(), [
-        'nama_inventaris' => 'required',
-        "tanggal_pembelian" => 'required'
-
+        'nama' => 'required',
+        "tanggal_pembelian" => 'required',
+        "jumlah" => 'required|numeric',
+        "estimasi_biaya" => 'required|numeric'
         ]);
 
       
 
     }
 
-    protected function cekNamaMasihBelumDipakai() {
-
-      return InventoriModel::where('nama_inventaris', $this->inventori->nama_inventaris)
-        ->where('id', '!=', $this->inventori->id)
-        ->count() == 0;
-
-    }
-    
 }
