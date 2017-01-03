@@ -1,5 +1,7 @@
 app
-	.controller('MaintenanceInventoriCreateController', function (MaintenanceInventoriModel,$state) {
+	.controller('MaintenanceInventoriCreateController', function (MaintenanceInventoriModel,
+		InventoriModel,
+		$state) {
 		var vm = this;
 
 		vm.maintenance = {
@@ -20,12 +22,13 @@ app
 
 				MaintenanceInventoriModel.store(maintenance)
 				.success(function(data) {
-					$state.go('inventoriIndex', {id: data.id})
+					alert('Data Berhasil Disimpan')
+					$state.go('inventoriShow', {id: data.data.inventori_id})
 				})
 			} else {
 				MaintenanceInventoriModel.update(maintenance.id, maintenance)
 				.success(function(data) {
-					vm.maintenance = data
+					vm.maintenance = data.data
 				})
 			}
 		}

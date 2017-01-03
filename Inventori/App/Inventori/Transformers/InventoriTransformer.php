@@ -21,7 +21,7 @@ class InventoriTransformer extends Fractal\TransformerAbstract {
             'id_lokasi' => (integer) $inventori->id_lokasi,
             'nama_lokasi' => $inventori->id_lokasi ? $inventori->location->name : null,
             'tanggal_pembelian' =>$inventori->tanggal_pembelian,
-            'estimasi_biaya' => (string) $inventori->estimasi_biaya,
+            'estimasi_biaya' => (integer) $inventori->estimasi_biaya,
             'jadwal_check_inventori' => $inventori->jadwal_check_inventori ? (int) $inventori->jadwal_check_inventori : NULL,
             'jadwal_maintenance_inventori' =>  $inventori->jadwal_maintenance_inventori ? (int) $inventori->jadwal_maintenance_inventori : NULL,
 

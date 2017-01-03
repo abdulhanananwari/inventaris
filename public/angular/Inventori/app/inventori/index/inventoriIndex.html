@@ -1,12 +1,12 @@
 <div class="row">
 	<div class="col-sm-12">
 
-	<button class="btn btn-info btn-block" ui-sref="inventoriShow">Tambah Data</button><br>
+	<button class="btn btn-primary btn-block" ui-sref="inventoriShow">Tambah Data</button><br>
 	<div class="input-group">
 	    <input type="text" ng-model='ctrl.filter.nama'  class="form-control" placeholder="Search">
 	    <div class="input-group-btn">
 	      <button class="btn btn-default" type="submit" ng-click="ctrl.get()">
-	        <i class="glyphicon glyphicon-search"></i>
+	        Search
 	      </button>
 	    </div>
 	 </div>
@@ -46,7 +46,7 @@
 							<td>{{inventori.jadwal_check_inventori}}</td>
 							<td>{{inventori.jadwal_maintenance_inventori}}</td>
 							<td>{{inventori.name_pic}}</td>
-							<td><a class="btn btn-info"
+							<td><a class="btn btn-primary"
 							ui-sref="inventoriShow({id: inventori.id})">Buka</a></td>
 						</tr>
 					</tbody>

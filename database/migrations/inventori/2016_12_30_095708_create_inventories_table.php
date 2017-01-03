@@ -23,7 +23,7 @@ class CreateInventoriesTable extends Migration
             $table->integer('jumlah')->unsigned();
             $table->integer('id_lokasi')->unsigned();
             $table->date('tanggal_pembelian')->nullable();
-            $table->string('estimasi_biaya');
+            $table->integer('estimasi_biaya')->unsigned();
             $table->binary('pic')->nullable();
 
             $table->integer('jadwal_check_inventori')->unsigned()->nullable();

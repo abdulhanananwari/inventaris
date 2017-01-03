@@ -15,7 +15,7 @@ class CreateCheckInventoriesTable extends Migration
     {
         Schema::create('check_inventories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reminder_id');
+            $table->string('reminder_id')->nullable();
             $table->string('keterangan')->nullable();
             $table->string('nama_pic');
             $table->binary('photos')->nullable();

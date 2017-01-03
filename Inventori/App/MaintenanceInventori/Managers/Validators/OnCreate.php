@@ -25,7 +25,7 @@ class OnCreate{
     protected function validateAttributes() {
 
       return \Validator::make($this->maintenance->toArray(), [
-        'reminder_id' => 'required',
+       /* 'reminder_id' => 'required',*/
         "nama_maintenance" => 'required',
         'keterangan' => 'required',
         'biaya' => 'required'

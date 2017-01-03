@@ -25,7 +25,7 @@ class OnCreate{
     protected function validateAttributes() {
 
       return \Validator::make($this->checkInventori->toArray(), [
-        'reminder_id' => 'required',
+       /* 'reminder_id' => 'required',*/
         'keterangan' => 'required',
 
         ]);

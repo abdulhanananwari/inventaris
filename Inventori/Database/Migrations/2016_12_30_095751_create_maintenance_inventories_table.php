@@ -15,6 +15,13 @@ class CreateMaintenanceInventoriesTable extends Migration
     {
         Schema::create('maintenance_inventories', function (Blueprint $table) {
             $table->increments('id');
+             $table->string('reminder_id')->nullable();
+            $table->string('nama_maintenance');
+            $table->string('keterangan')->nullable();
+            $table->integer('biaya')->unsigned();
+            $table->binary('photos')->nullable();
+            $table->string('nama_pic');
+            $table->integer('inventori_id')->unsigned();
             $table->timestamps();
         });
     }

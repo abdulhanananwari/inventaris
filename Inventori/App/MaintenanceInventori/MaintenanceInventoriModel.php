@@ -10,7 +10,7 @@ class MaintenanceInventoriModel extends Model {
     
     protected $guarded = ['created_at', 'updated_at'];
 
-    protected $doNotSave = ['photos'];
+    protected $doNotSave = ['photos,reminder_id'];
     
     // Managers
     

@@ -812,7 +812,9 @@ app
 
 	})
 app
-	.controller('CheckInventoriCreateController', function (CheckInventoriModel,$state) {
+	.controller('CheckInventoriCreateController', function (CheckInventoriModel,
+		InventoriModel,
+		$state) {
 		var vm = this;
 		
 		vm.checkInventori = {
@@ -834,7 +836,8 @@ app
 
 				CheckInventoriModel.store(checkInventori)
 				.success(function(data) {
-					$state.go('inventoriIndex', {id: data.id})
+					alert('Data Berhasil Di Simpan')
+					$state.go('inventoriShow', {id: data.data.inventori_id})
 				})
 			} else {
 				CheckInventoriModel.update(checkInventori.id, checkInventori)
@@ -993,9 +996,9 @@ app
 				vm.filter.page = page;
 			}
 
-			MaintenanceInventoriModel.index(vm.filter,['maintenances'])
+			MaintenanceInventoriModel.index(vm.filter)
 			.success(function(data) {
-				vm.maintenances = data.data;
+				vm.maintenance_inventories = data.data;
 				vm.meta =data.meta;
 			})
 
@@ -1007,9 +1010,9 @@ app
 				vm.filter.page = page;
 			}
 
-			CheckInventoriModel.index(vm.filter,['checkInventoris'])
+			CheckInventoriModel.index(vm.filter)
 			.success(function(data) {
-				vm.checkInventoris = data.data;
+				vm.check_inventories = data.data;
 				vm.metaCheckInventori =data.meta;
 			})
 		} 
@@ -1094,7 +1097,9 @@ app
 		vm.get();
 	});
 app
-	.controller('MaintenanceInventoriCreateController', function (MaintenanceInventoriModel,$state) {
+	.controller('MaintenanceInventoriCreateController', function (MaintenanceInventoriModel,
+		InventoriModel,
+		$state) {
 		var vm = this;
 
 		vm.maintenance = {
@@ -1115,12 +1120,13 @@ app
 
 				MaintenanceInventoriModel.store(maintenance)
 				.success(function(data) {
-					$state.go('inventoriIndex', {id: data.id})
+					alert('Data Berhasil Disimpan')
+					$state.go('inventoriShow', {id: data.data.inventori_id})
 				})
 			} else {
 				MaintenanceInventoriModel.update(maintenance.id, maintenance)
 				.success(function(data) {
-					vm.maintenance = data
+					vm.maintenance = data.data
 				})
 			}
 		}

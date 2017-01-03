@@ -1,5 +1,7 @@
 app
-	.controller('CheckInventoriCreateController', function (CheckInventoriModel,$state) {
+	.controller('CheckInventoriCreateController', function (CheckInventoriModel,
+		InventoriModel,
+		$state) {
 		var vm = this;
 		
 		vm.checkInventori = {
@@ -21,7 +23,8 @@ app
 
 				CheckInventoriModel.store(checkInventori)
 				.success(function(data) {
-					$state.go('inventoriIndex', {id: data.id})
+					alert('Data Berhasil Di Simpan')
+					$state.go('inventoriShow', {id: data.data.inventori_id})
 				})
 			} else {
 				CheckInventoriModel.update(checkInventori.id, checkInventori)

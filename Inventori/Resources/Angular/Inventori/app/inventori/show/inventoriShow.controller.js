@@ -63,9 +63,9 @@ app
 				vm.filter.page = page;
 			}
 
-			MaintenanceInventoriModel.index(vm.filter,['maintenances'])
+			MaintenanceInventoriModel.index(vm.filter)
 			.success(function(data) {
-				vm.maintenances = data.data;
+				vm.maintenance_inventories = data.data;
 				vm.meta =data.meta;
 			})
 
@@ -77,9 +77,9 @@ app
 				vm.filter.page = page;
 			}
 
-			CheckInventoriModel.index(vm.filter,['checkInventoris'])
+			CheckInventoriModel.index(vm.filter)
 			.success(function(data) {
-				vm.checkInventoris = data.data;
+				vm.check_inventories = data.data;
 				vm.metaCheckInventori =data.meta;
 			})
 		} 
