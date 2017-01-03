@@ -15,9 +15,10 @@ class FromRequest {
     
     public function assign(\Illuminate\Http\Request $request) {
         
-        $this->checkInventori->fill($request->only('id','reminder_id','keterangan', 'photos', 'inventori_id'));
+        $this->checkInventori->fill($request->only('id','reminder_id','keterangan', 'inventori_id'));
         
         $this->checkInventori->nama_pic = \ParsedJwt::getByKey('name');
+        $this->checkInventori->photos = json_encode($request->get('photos'));
 
         return $this->checkInventori;
     }

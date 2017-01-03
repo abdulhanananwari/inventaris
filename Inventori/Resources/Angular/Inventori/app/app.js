@@ -1,5 +1,7 @@
  var app = angular 
- 	.module('InventoriApp', ['ui.router', 'Solumax.ErrorInterceptor','Solumax.JwtManager','Solumax.TenantDatabaseConnection','Solumax.EntityFinder'])
+ 	.module('InventoriApp', ['ui.router',
+ 		'Solumax.ErrorInterceptor','Solumax.JwtManager','Solumax.TenantDatabaseConnection',
+ 		'Solumax.EntityFinder', 'Solumax.FileManager'])
 
  	.factory('AppFactory', function() {
 

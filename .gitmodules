@@ -13,3 +13,6 @@
 [submodule "Inventori/Resources/Angular/Inventori/app/dependencies"]
 	path = Inventori/Resources/Angular/Inventori/app/dependencies
 	url = git@bitbucket.org:rezariantono/solumax2_spa_dependencies.git
+[submodule "Solumax/FileManager"]
+	path = Solumax/FileManager
+	url = git@bitbucket.org:rezariantono/solumax2_file_manager.git

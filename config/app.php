@@ -181,6 +181,8 @@ return [
         Inventori\Providers\InventoriProvider::class,
 
         Solumax\AuthClient\SolumaxAuthClientProvider::class,
+        Solumax\FileManager\SolumaxFileManagerProvider::class,
+        
         Wala\Jwt\WalaJwtProvider::class,
         
 
