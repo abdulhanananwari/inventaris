@@ -52,7 +52,7 @@ class InventoriController extends Controller {
             return $this->formatErrors($validation);
         }
 
-        $inventori->save();
+        $inventori->action()->onCreateOrUpdate();
 
         return $this->formatItem($inventori);
     }

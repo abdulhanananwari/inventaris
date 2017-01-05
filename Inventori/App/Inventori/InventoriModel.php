@@ -10,7 +10,6 @@ class InventoriModel extends Model {
     
     protected $guarded = ['created_at', 'updated_at'];
 
-    protected $doNotSave = ['photos'];
 
     
     // Managers
@@ -24,7 +23,9 @@ class InventoriModel extends Model {
     public function calculate() {
         return new Managers\Calculator($this);
     }
-
+    public function action() {
+        return new Managers\Actioner($this);
+    }
     public function email() {
         return new Managers\Emailers($this);
     }

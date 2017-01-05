@@ -16,7 +16,7 @@ class InventoriTransformer extends Fractal\TransformerAbstract {
             'keterangan' => (string) $inventori->keterangan,
             'kondisi' => (string) $inventori->kondisi,
             'rencana_tanggal_peremajaan' => $inventori->rencana_tanggal_peremajaan,
-            'photos' => (binary)$inventori->photos,
+            'photos' => $inventori->photos ? json_decode($inventori->photos):[],
             'jumlah' => (integer) $inventori->jumlah,
             'id_lokasi' => (integer) $inventori->id_lokasi,
             'nama_lokasi' => $inventori->id_lokasi ? $inventori->location->name : null,

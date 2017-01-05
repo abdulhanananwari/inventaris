@@ -17,6 +17,6 @@ app
 				vm.meta = data.meta;
 			})
 		} 
-		vm.get()
+		vm.get();
 		
 	});

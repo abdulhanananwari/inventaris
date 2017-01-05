@@ -28,7 +28,7 @@ class OnCreate{
        /* 'reminder_id' => 'required',*/
         "nama_maintenance" => 'required',
         'keterangan' => 'required',
-        'biaya' => 'required'
+        'biaya' => 'required|numeric'
 
         ]);
 

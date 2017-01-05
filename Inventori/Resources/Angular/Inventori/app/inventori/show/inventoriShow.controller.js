@@ -50,9 +50,11 @@ app
 			vm.inventori.pic .push( _.pick(pic,['user_id','name','email']));
 		}
 
+
 		vm.remove=function(pic) {
 			_.remove(vm.inventori.pic, pic);
 		}
+
 
 		vm.filter = {
 			inventori_id: $state.params.id
@@ -105,5 +107,19 @@ app
 		.success(function(data) {
 			vm.locations = data.data;
 		})
+
+		vm.fileManager = {
+			displayedInput: JSON.stringify({
+				name: { label: "Keterangan", show: true },
+				file: { label : "Bukti Photo", show : true },
+				reset: {show: true}
+			}),
+			additionalData: JSON.stringify({
+				path: 'inventori',
+				subpath: $state.params.id,
+				fileable_type: 'Inventori',
+				fileable_id: $state.params.id
+			})
+		}
 
 	});

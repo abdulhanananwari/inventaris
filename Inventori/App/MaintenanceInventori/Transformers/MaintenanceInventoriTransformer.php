@@ -14,8 +14,8 @@ class MaintenanceInventoriTransformer extends Fractal\TransformerAbstract {
            /* 'reminder_id' => (string) $maintenance->reminder_id,*/
             'nama_maintenance' => (string) $maintenance->nama_maintenance,
             'keterangan' => (string) $maintenance->keterangan,
-            'biaya' => (string) $maintenance->biaya,
-            'photos' => (binary)$maintenance->photos,
+            'biaya' => (integer) $maintenance->biaya,
+            'photos' => $maintenance->photos ? json_decode($maintenance->photos):[],
             'nama_pic' => (string)$maintenance->nama_pic,
             'inventori_id' =>(integer)$maintenance->inventori_id,
         ];

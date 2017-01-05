@@ -18,7 +18,12 @@ class FromRequest {
         $this->checkInventori->fill($request->only('id','reminder_id','keterangan', 'inventori_id'));
         
         $this->checkInventori->nama_pic = \ParsedJwt::getByKey('name');
-        $this->checkInventori->photos = json_encode($request->get('photos'));
+        
+        if ($request->has('photos')) {
+
+            $this->checkInventori->photos = json_encode($request->get('photos'));
+        }
+        
 
         return $this->checkInventori;
     }

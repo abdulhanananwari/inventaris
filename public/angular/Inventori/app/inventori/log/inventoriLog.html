@@ -1,0 +1,26 @@
+<div class="row">
+	<div class="table-responsive">
+		<table class=" table table-responsive">
+			<thead>
+			<tr>
+				<th>History</th>
+				<th>Inventaris</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="log in ctrl.logs">
+					<td>
+						<p>{{log.type}}</p>
+						<p>{{log.user_id}}</p>
+						<p>{{log.created_at}}</p>
+					</td>
+					<!-- <td>
+						<div ng-repeat="inventori in log.data_one.inventories">
+							<p>Nama Inventaris: {{inventori.nama}}</p>
+						</div>
+					</td> -->
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -5,7 +5,8 @@ app
 		var vm = this;
 		
 		vm.checkInventori = {
-			inventori_id: $state.params.inventoriId
+			inventori_id: $state.params.inventoriId,
+			photos:[]
 		}
 
 		if ($state.params.id) {
@@ -32,7 +33,7 @@ app
 
 				CheckInventoriModel.update(checkInventori.id, checkInventori)
 				.success(function(data) {
-					vm.checkInventori = data.data
+					vm.checkInventori = data.data;
 				})
 			}
 		}
@@ -40,6 +41,10 @@ app
 			$state.go('checkInventoriCreate', {id: ''}, {reload: true})
 		}
 
+		vm.addPhotos =function(photos) {
+
+			vm.checkInventori.photos .push( _.pick(photos,['id','uuid']));
+		}
 
 		vm.fileManager = {
 			displayedInput: JSON.stringify({

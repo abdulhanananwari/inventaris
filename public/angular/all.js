@@ -1,7 +1,7 @@
  var app = angular 
  	.module('InventoriApp', ['ui.router',
  		'Solumax.ErrorInterceptor','Solumax.JwtManager','Solumax.TenantDatabaseConnection',
- 		'Solumax.EntityFinder', 'Solumax.FileManager'])
+ 		'Solumax.EntityFinder', 'Solumax.FileManager','Solumax.Logger'])
 
  	.factory('AppFactory', function() {
 
@@ -87,6 +87,11 @@ app
  			url:'/checkInventori/create/:id/:inventoriId',
  			templateUrl: 'app/checkInventori/create/checkInventoriCreate.html',
  			controller: 'CheckInventoriCreateController as ctrl'
+ 		})
+ 		.state('inventoriLog', {
+ 			url:'/inventori/log/:id',
+ 			templateUrl:'app/inventori/log/inventoriLog.html',
+ 			controller:'InventoriLogController as ctrl'
  		})
  		
  	})
@@ -814,35 +819,14 @@ app
 
 	})
 app
-	.controller('CheckInventoriIndexController', function (
-		CheckInventoriModel,$stateParams) {
-		var vm =this;
-
-
-		vm.filter = {};
-
-		vm.get = function(page) {
-
-			if (page) {
-				vm.filter.page = page;
-			}
-			CheckInventoriModel.index()
-			.success(function(data) {
-				vm.checkInventoris = data.data;
-				vm.meta = data.meta;
-			})
-		} 
-		vm.get()
-		
-	});
-app
 	.controller('CheckInventoriCreateController', function (CheckInventoriModel,
 		InventoriModel,
 		$state) {
 		var vm = this;
 		
 		vm.checkInventori = {
-			inventori_id: $state.params.inventoriId
+			inventori_id: $state.params.inventoriId,
+			photos:[]
 		}
 
 		if ($state.params.id) {
@@ -869,7 +853,7 @@ app
 
 				CheckInventoriModel.update(checkInventori.id, checkInventori)
 				.success(function(data) {
-					vm.checkInventori = data.data
+					vm.checkInventori = data.data;
 				})
 			}
 		}
@@ -877,6 +861,10 @@ app
 			$state.go('checkInventoriCreate', {id: ''}, {reload: true})
 		}
 
+		vm.addPhotos =function(photos) {
+
+			vm.checkInventori.photos .push( _.pick(photos,['id','uuid']));
+		}
 
 		vm.fileManager = {
 			displayedInput: JSON.stringify({
@@ -891,6 +879,28 @@ app
 				fileable_id: $state.params.id
 			})
 		}
+	});
+app
+	.controller('CheckInventoriIndexController', function (
+		CheckInventoriModel,$stateParams) {
+		var vm =this;
+
+
+		vm.filter = {};
+
+		vm.get = function(page) {
+
+			if (page) {
+				vm.filter.page = page;
+			}
+			CheckInventoriModel.index()
+			.success(function(data) {
+				vm.checkInventoris = data.data;
+				vm.meta = data.meta;
+			})
+		} 
+		vm.get();
+		
 	});
 !function(){angular.module("angular-jwt",["angular-jwt.interceptor","angular-jwt.jwt"]),angular.module("angular-jwt.interceptor",[]).provider("jwtInterceptor",function(){this.urlParam=null,this.authHeader="Authorization",this.authPrefix="Bearer ",this.tokenGetter=function(){return null};var e=this;this.$get=["$q","$injector","$rootScope",function(r,t,a){return{request:function(a){if(a.skipAuthorization)return a;if(e.urlParam){if(a.params=a.params||{},a.params[e.urlParam])return a}else if(a.headers=a.headers||{},a.headers[e.authHeader])return a;var n=r.when(t.invoke(e.tokenGetter,this,{config:a}));return n.then(function(r){return r&&(e.urlParam?a.params[e.urlParam]=r:a.headers[e.authHeader]=e.authPrefix+r),a})},responseError:function(e){return 401===e.status&&a.$broadcast("unauthenticated",e),r.reject(e)}}}]}),angular.module("angular-jwt.jwt",[]).service("jwtHelper",function(){this.urlBase64Decode=function(e){var r=e.replace(/-/g,"+").replace(/_/g,"/");switch(r.length%4){case 0:break;case 2:r+="==";break;case 3:r+="=";break;default:throw"Illegal base64url string!"}return decodeURIComponent(escape(window.atob(r)))},this.decodeToken=function(e){var r=e.split(".");if(3!==r.length)throw new Error("JWT must have 3 parts");var t=this.urlBase64Decode(r[1]);if(!t)throw new Error("Cannot decode the token");return JSON.parse(t)},this.getTokenExpirationDate=function(e){var r;if(r=this.decodeToken(e),"undefined"==typeof r.exp)return null;var t=new Date(0);return t.setUTCSeconds(r.exp),t},this.isTokenExpired=function(e,r){var t=this.getTokenExpirationDate(e);return r=r||0,null===t?!1:!(t.valueOf()>(new Date).valueOf()+1e3*r)}})}();
 
@@ -939,18 +949,40 @@ app
 		
 		function assignKondisiToInventori() {
 
-			_.each(vm.inventoris, function(inventori) {
-				inventori.object_kondisi = _.first(_.filter(vm.kondisi, function(kondisi) {
-					return kondisi.code == inventori.kondisi
-				}))
-			})
+			
+				_.each(vm.inventories, function(inventori) {
+					inventori.object_kondisi = _.first(_.filter(vm.kondisi, function(kondisi) {
+						return kondisi.code == inventori.kondisi
+					}))
+				})
+			
 		}
-
 		ConfigModel.get('kondisi')
-		.success(function(data) {
-			vm.kondisi = data.data
-		})
+			.success(function(data) {
+				vm.kondisi = data.data
+			})
+		
 	});
+app
+	.controller('InventoriLogController', function(
+		LogModel,
+		$state) {
+		var vm = this;
+
+		vm.filter = {
+			loggable_type:'Inventori',
+			loggable_id: $state.params.id
+		};
+
+			LogModel.index(vm.filter)
+			.success(function(data) {
+				
+				vm.logs = data.data;
+				
+			});
+
+});
+		
 app
 	.controller('InventoriShowController', function (InventoriModel,
 		MaintenanceInventoriModel,
@@ -1003,9 +1035,11 @@ app
 			vm.inventori.pic .push( _.pick(pic,['user_id','name','email']));
 		}
 
+
 		vm.remove=function(pic) {
 			_.remove(vm.inventori.pic, pic);
 		}
+
 
 		vm.filter = {
 			inventori_id: $state.params.id
@@ -1058,6 +1092,20 @@ app
 		.success(function(data) {
 			vm.locations = data.data;
 		})
+
+		vm.fileManager = {
+			displayedInput: JSON.stringify({
+				name: { label: "Keterangan", show: true },
+				file: { label : "Bukti Photo", show : true },
+				reset: {show: true}
+			}),
+			additionalData: JSON.stringify({
+				path: 'inventori',
+				subpath: $state.params.id,
+				fileable_type: 'Inventori',
+				fileable_id: $state.params.id
+			})
+		}
 
 	});
 
@@ -1133,6 +1181,7 @@ app
 				vm.maintenance = data.data;
 			})
 		} 
+
 		vm.store = function(maintenance) {
 			if (!maintenance.id) {
 
@@ -1140,18 +1189,29 @@ app
 
 				MaintenanceInventoriModel.store(maintenance)
 				.success(function(data) {
-					alert('Data Berhasil Disimpan')
-					$state.go('inventoriShow', {id: data.data.inventori_id})
+					alert('Data Berhasil Disimpan. Silahkan upload foto sekarang.')
+					$state.go('maintenanceCreate', {id: data.data.id})
 				})
 			} else {
 				MaintenanceInventoriModel.update(maintenance.id, maintenance)
 				.success(function(data) {
-					vm.maintenance = data.data
+					vm.maintenance = data.data;
 				})
 			}
 		}
-		vm.reset = function() {
-			$state.go('maintenanceCreate', {id: ''}, {reload: true})
+
+		vm.fileManager = {
+			displayedInput: JSON.stringify({
+				name: { label: "Keterangan", show: true },
+				file: { label : "Bukti Photo", show : true },
+				reset: {show: true}
+			}),
+			additionalData: JSON.stringify({
+				path: 'maintenance-inventori',
+				subpath: $state.params.id,
+				fileable_type: 'MaintenanceInventori',
+				fileable_id: $state.params.id
+			})
 		}
 	});
 //# sourceMappingURL=all.js.map

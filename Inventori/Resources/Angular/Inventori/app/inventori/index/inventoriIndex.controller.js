@@ -36,15 +36,17 @@ app
 		
 		function assignKondisiToInventori() {
 
-			_.each(vm.inventoris, function(inventori) {
-				inventori.object_kondisi = _.first(_.filter(vm.kondisi, function(kondisi) {
-					return kondisi.code == inventori.kondisi
-				}))
-			})
+			
+				_.each(vm.inventories, function(inventori) {
+					inventori.object_kondisi = _.first(_.filter(vm.kondisi, function(kondisi) {
+						return kondisi.code == inventori.kondisi
+					}))
+				})
+			
 		}
-
 		ConfigModel.get('kondisi')
-		.success(function(data) {
-			vm.kondisi = data.data
-		})
+			.success(function(data) {
+				vm.kondisi = data.data
+			})
+		
 	});

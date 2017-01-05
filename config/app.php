@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
@@ -182,6 +182,8 @@ return [
 
         Solumax\AuthClient\SolumaxAuthClientProvider::class,
         Solumax\FileManager\SolumaxFileManagerProvider::class,
+        Solumax\Logger\SolumaxLoggerProvider::class,
+
         
         Wala\Jwt\WalaJwtProvider::class,
         
@@ -235,6 +237,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'ParsedJwt' => Wala\Jwt\Facade\ParsedJwtFacade::class,
+        'SolLog' => Solumax\Logger\App\Log\Facade\LogFacade::class,
 
     ],
 

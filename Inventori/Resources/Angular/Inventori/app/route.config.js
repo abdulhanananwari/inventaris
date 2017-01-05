@@ -45,5 +45,10 @@ app
  			templateUrl: 'app/checkInventori/create/checkInventoriCreate.html',
  			controller: 'CheckInventoriCreateController as ctrl'
  		})
+ 		.state('inventoriLog', {
+ 			url:'/inventori/log/:id',
+ 			templateUrl:'app/inventori/log/inventoriLog.html',
+ 			controller:'InventoriLogController as ctrl'
+ 		})
  		
  	})

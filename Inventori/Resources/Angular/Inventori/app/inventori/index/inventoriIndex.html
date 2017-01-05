@@ -5,7 +5,7 @@
 	<div class="input-group">
 	    <input type="text" ng-model='ctrl.filter.nama'  class="form-control" placeholder="Search">
 	    <div class="input-group-btn">
-	      <button class="btn btn-default" type="submit" ng-click="ctrl.get()">
+	      <button class="btn btn-default" type="submit" ng-click="ctrl.get()" style="height: 34px;">
 	        Search
 	      </button>
 	    </div>
@@ -32,13 +32,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="inventori in ctrl.inventories">
+						<tr ng-repeat="inventori in ctrl.inventories | filter:ctrl.filter.nama">
 							<td>{{inventori.id}}</td>
 							<td>{{inventori.nama}}</td>
 							<td>{{inventori.keterangan}}</td>
 							<td>{{inventori.object_kondisi.name}}</td>
 							<td>{{inventori.rencana_tanggal_peremajaan}}</td>
-							<td>{{inventori.photos}}</td>
+							<td><img ng-src="{{inventori.photos[0].full_url}}" class="img-responsive" style="height: 70px; width: 100px;"></td>
 							<td>{{inventori.jumlah}}</td>
 							<td>{{inventori.id_lokasi}}</td>
 							<td>{{inventori.tanggal_pembelian}}</td>
@@ -51,6 +51,24 @@
 						</tr>
 					</tbody>
 				</table>
+				<nav ng-if="ctrl.meta.pagination && ctrl.meta.pagination.total > 20" align="center">
+					<ul class="pagination">
+						<li ng-if="ctrl.meta.pagination.current_page > 1">
+							<a ng-click="ctrl.get(ctrl.meta.pagination.current_page - 1)" aria-label="Previous">					<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="disabled" >
+							<span>Halaman ke {{ctrl.meta.pagination.current_page}} dari
+							{{ctrl.meta.pagination.total_pages}} ({{ctrl.meta.pagination.total}} total data;
+							{{ctrl.meta.pagination.per_page}} data per halaman)</span>
+						</li>
+						<li ng-if="ctrl.meta.pagination.current_page < ctrl.meta.pagination.total_pages">
+							<a ng-click="ctrl.get(ctrl.meta.pagination.current_page + 1)" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav> 							
 			</div>
 	</div>
 </div>

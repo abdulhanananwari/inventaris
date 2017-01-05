@@ -29,6 +29,11 @@ class FromRequest {
             $this->inventori->pic = json_encode($request->get('pic'));
             
          }
+
+        if ($request->has('photos')) {
+
+            $this->inventori->photos = json_encode($request->get('photos'));
+        }
         
 
         return $this->inventori;

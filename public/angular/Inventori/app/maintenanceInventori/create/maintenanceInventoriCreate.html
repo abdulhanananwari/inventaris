@@ -4,17 +4,25 @@
 					<input type="hidden" name="id">
 					<input class="form-control" type="text" name="reminder_id" ng-model="ctrl.maintenance.reminder_id"> -->
 			<label class="col-form-label">Nama</label>
-					<input class="form-control" type="text" name="nama_maintenance" ng-model="ctrl.maintenance.nama_maintenance">
+					<input class="form-control" type="text" ng-model="ctrl.maintenance.nama_maintenance">
 			<label class="col-form-label">Keterangan</label>
-					<input class="form-control" type="text" name="keterangan" ng-model="ctrl.maintenance.keterangan">
+					<input class="form-control" type="text"  ng-model="ctrl.maintenance.keterangan">
 			<label class="col-form-label">Biaya</label>
-					<input class="form-control" type="number"  name="biaya" ng-model="ctrl.maintenance.biaya">
-    		<label for="exampleInputFile">Bukti Photo</label>
-    			<input type="file" class="form-control-file" name="photos" ng-model="ctrl.maintenance.photos">
-    			<small class="form-text text-muted">Upload Photo</small>
+					<input class="form-control" type="number"  ng-model="ctrl.maintenance.biaya">
+			<div class="row">
+				<div class="col-sm-12">
+					<table>
+						<tr ng-repeat="photo in ctrl.maintenance.photos">
+							<td><img ng-src="{{ photo.full_url }}" class="img-responsive" style="height: 100px;width: auto;">
+							<p>{{photo.name}}</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<br>
+			<file-manager-upload ng-show="ctrl.maintenance.id != null" displayed-input='{{ ctrl.fileManager.displayedInput }}' additional-data='{{ ctrl.fileManager.additionalData }}' uploaded-file="uploadedFile" on-file-uploaded="ctrl.maintenance.photos.push(uploadedFile);ctrl.store(ctrl.maintenance)"></file-manager-upload>
 		<div>
 			<button class="btn btn-danger" ng-click="ctrl.store(ctrl.maintenance)">Simpan</button>
-			<button class="btn btn-warning" ng-click="ctrl.reset()">Reset</button>
 		</div>
 	</div>
 </div>

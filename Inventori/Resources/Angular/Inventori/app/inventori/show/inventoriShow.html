@@ -14,43 +14,42 @@
 								<select class="form-control" ng-options="kondisi.code as kondisi.name for kondisi in ctrl.kondisi" ng-model="ctrl.inventori.kondisi"></select>
 							<label class="col-form-label">Rencana Tanggal Peremajaan</label>
 								<input class="form-control" type="text" id="rencana_tanggal_peremajaan" name="rencana_tanggal_peremajaan" ng-model="ctrl.inventori.rencana_tanggal_peremajaan">
-				    		<label for="exampleInputFile">Photo</label>
-				    			<input type="file" class="form-control-file" name="photos" ng-model="ctrl.inventori.photo">
 				    			<small class="form-text text-muted">Upload Photo</small><br>
 							<label class="col-form-label">Jumlah</label>
-									<input class="form-control" type="number" name="jumlah" ng-model="ctrl.inventori.jumlah">
+								<input class="form-control" type="number" name="jumlah" ng-model="ctrl.inventori.jumlah">
 							<label class="col-form-label">ID Lokasi</label>
-								<div class="dropdown dropdown-scroll" ng-app="app">
-								    <button class="btn btn-default btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">{{'Lokasi: ' + ctrl.inventori.nama_lokasi || 'Lokasi Belum Dipilih' }} <span class="caret"></span>
-								      </button>
-								     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-								        <li role="presentation">
-								            <div class="input-group input-group-sm search-control">
-								             <span class="input-group-addon">
-								                    <span class="glyphicon glyphicon-search"></span>
-								              </span>
-								                <input type="text" name="id_lokasi" class="form-control" placeholder="Search Location" ng-model="x"></input>
-								            </div>
-								        </li>
-								        	<li role="presentation" ng-click="ctrl.inventori.id_lokasi=storagelocation.id;ctrl.inventori.nama_lokasi=storagelocation.name" ng-repeat='storagelocation in ctrl.locations | filter:x'><a>
-								        	{{ storagelocation.id }} &nbsp;
-								        	{{ storagelocation.name }}</a>
-								        </li>
-								    </ul>
-								</div>
-								<br>
+									<div class="dropdown dropdown-scroll" ng-app="app">
+									    <button class="btn btn-default btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">{{'Lokasi: ' + ctrl.inventori.nama_lokasi || 'Lokasi Belum Dipilih' }} <span class="caret"></span>
+									      </button>
+									     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+									        <li role="presentation">
+									            <div class="input-group input-group-sm search-control">
+									             <span class="input-group-addon">
+									                    <span class="glyphicon glyphicon-search"></span>
+									              </span>
+									                <input type="text" name="id_lokasi" class="form-control" placeholder="Search Location" ng-model="x"></input>
+									            </div>
+									        </li>
+									        	<li role="presentation" ng-click="ctrl.inventori.id_lokasi=storagelocation.id;ctrl.inventori.nama_lokasi=storagelocation.name" ng-repeat='storagelocation in ctrl.locations | filter:x'><a>
+									        	{{ storagelocation.id }} &nbsp;
+									        	{{ storagelocation.name }}</a>
+									        </li>
+									    </ul>
+									</div>
+									<br>
 							<label class="col-form-label">Tanggal Pembelian</label>
-									<input class="form-control" type="text" id="tanggal_pembelian" name="tanggal_pembelian" ng-model="ctrl.inventori.tanggal_pembelian">
+								<input class="form-control" type="text" id="tanggal_pembelian" name="tanggal_pembelian" ng-model="ctrl.inventori.tanggal_pembelian">
 							<label class="col-form-label">Estimasi Nilai Rupiah</label>
-									<input class="form-control" type="number" ng-model="ctrl.inventori.estimasi_biaya">
+								<input class="form-control" type="number" ng-model="ctrl.inventori.estimasi_biaya">
 							<label class="col-form-label">Jadwal Chek Inventaris</label>
-									<input class="form-control" type="number" ng-model="ctrl.inventori.jadwal_check_inventori">
+								<input class="form-control" type="number" ng-model="ctrl.inventori.jadwal_check_inventori">
 							<label class="col-form-label">Jadwal Maintenance Inventaris</label>
-									<input class="form-control" type="number" ng-model="ctrl.inventori.jadwal_maintenance_inventori">
+								<input class="form-control" type="number" ng-model="ctrl.inventori.jadwal_maintenance_inventori">
 							<label class="col-xs-2 col-form-label">PIC</label>
 									<entity-finder-modal selected-entity="selectedPic" on-entity-selected="ctrl.addPic(selectedPic)">
 									</entity-finder-modal>
-										<table class="table table-responsive">
+									<div class="table-responsive">	
+										<table class=" table table-responsive">
 											<thead>
 												<tr>
 													<th>User ID</th>
@@ -70,13 +69,24 @@
 												</tr>
 											</tbody>
 										</table>
-						</div>                         
-						<div>
-							<button class="btn btn-danger" ng-click="ctrl.store(ctrl.inventori)">Simpan</button>
-							<button class="btn btn-warning" ng-click="ctrl.reset()">Reset</button>
-						</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<table>
+												<tr ng-repeat="photo in ctrl.inventori.photos">
+													<td><img ng-src="{{ photo.full_url }}" class="img-responsive"><p>{{photo.name}}</p></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<br>
+									<file-manager-upload ng-show="ctrl.inventori.id != null" displayed-input='{{ ctrl.fileManager.displayedInput }}' additional-data='{{ ctrl.fileManager.additionalData }}' uploaded-file="uploadedFile" on-file-uploaded="ctrl.inventori.photos.push(uploadedFile);ctrl.store(ctrl.inventori)"></file-manager-upload>
+									<div>
+										<button class="btn btn-danger" ng-click="ctrl.store(ctrl.inventori)">Simpan</button>
+										<button class="btn btn-warning" ng-click="ctrl.reset()">Reset</button>
+									</div>
 					</div>
-				</div><br>
+				</div>
 				<div ng-if="ctrl.inventori.id" class="col-sm-6">
 					<div class="well">
 					<h4>Maintenance Inventori</h4><hr>
@@ -105,7 +115,7 @@
 											<td>{{maintenance.nama_maintenance}}</td>
 											<td>{{maintenance.keterangan}}</td>
 											<td>{{maintenance.biaya}}</td>
-											<td>{{maintenance.photos}}</td>
+											<td><img ng-src="{{maintenance.photos[0].full_url}}" class="img-responsive" style="height: 100px;width: auto;"></td>
 											<td>{{maintenance.nama_pic}}</td>
 										</tr>
 									</tbody>
@@ -158,7 +168,7 @@
 											<td>{{checkInventori.reminder_id}}</td> -->
 											<td>{{checkInventori.keterangan}}</td>
 											<td>{{checkInventori.nama_pic}}</td>
-											<td>{{checkInventori.photos}}</td>
+											<td><img ng-src="{{ checkInventori.photos[0].full_url }}" class="img-responsive" style="height: 100px; width: auto;"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -176,7 +186,7 @@
 										</li>
 										<li ng-if="ctrl.metaCheckInventori.pagination.links.next">
 											<a ng-click="ctrl.getcheck(ctrl.metaCheckInventori.pagination.current_page + 1)" aria-label="Next">
-										<span aria-hidden="true">&raquo;</span>
+											<span aria-hidden="true">&raquo;</span>
 											</a>
 										</li>
 									</ul>
@@ -184,6 +194,9 @@
 							</div>
 						</div>
 					</div>
+				</div>
+				<div ng-if="ctrl.inventori.id" class="col-sm-6">
+					<button class="btn btn-primary btn-block" ui-sref="inventoriLog({id: ctrl.inventori.id})">Histori</button>
 				</div>
 		</div>
 </div>
