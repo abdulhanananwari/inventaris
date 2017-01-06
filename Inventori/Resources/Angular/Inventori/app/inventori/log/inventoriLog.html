@@ -1,26 +1,38 @@
 <div class="row">
+<div class="col-sm-12">
+	<a ui-sref="inventoriShow({id: ctrl.inventori.id})">Back</a>
 	<div class="table-responsive">
-		<table class=" table table-responsive">
+
+		<table class="table table-bordered table-hover">
 			<thead>
-			<tr>
-				<th>History</th>
-				<th>Inventaris</th>
-			</tr>
+				<tr>
+					<th class="col-sm-5">Data User      </th>
+					<th class="col-sm-7">Inventaris</th>
+				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="log in ctrl.logs">
 					<td>
-						<p>{{log.type}}</p>
-						<p>{{log.user_id}}</p>
-						<p>{{log.created_at}}</p>
+						<p>User Name : {{log.user.data.name}}</p>
+						<p>User Id   : {{log.user_id}}</p>
+						<p>Dibuat Tanggal : {{log.created_at}}</p>
 					</td>
-					<!-- <td>
-						<div ng-repeat="inventori in log.data_one.inventories">
-							<p>Nama Inventaris: {{inventori.nama}}</p>
-						</div>
-					</td> -->
+					<td>
+						<p>Nama Inventaris: {{log.data_one.nama}}</p>
+						<p>Id Lokasi : {{log.data_one.id_lokasi}}</p>
+						<p>Estimasi Nilai Rupiah : {{log.data_one.estimasi_biaya}}</p>
+						<p>Tanggal Pembelian : {{log.data_one.tanggal_pembelian}}</p>
+						<p>Rencana Tanggal Peremajaan : {{log.data_one.rencana_tanggal_peremajaan}}</p>
+						<p>Kondisi : {{log.data_one.object_kondisi.name}}</p>
+						<p>jumlah : {{log.data_one.jumlah}}</p>
+						<p>Keterangan : {{log.data_one.keterangan}}</p>
+						<p>Jadwal Check : Setiap {{log.data_one.jadwal_check_inventori}} hari sekali</p>
+						<p>Jadwal Maintenance : Setiap {{log.data_one.jadwal_maintenance_inventori}} hari sekali</p>
+					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+</div>
+	
 </div>

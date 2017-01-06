@@ -62,7 +62,7 @@ class InventoriController extends Controller {
         $inventori = $this->inventori->find($id);
         $inventori->assign()->fromRequest($request);
         
-        $inventori->save();
+        $inventori->action()->onCreateOrUpdate();
         
         return $this->formatItem($inventori);
     }

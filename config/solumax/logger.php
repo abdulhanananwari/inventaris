@@ -4,7 +4,7 @@ return [
 
     'http' => [
         'routes' => [
-            'middlewares' => []
+            'middlewares' => ['auth.db.overwrite']
         ]
     ]
 ];
