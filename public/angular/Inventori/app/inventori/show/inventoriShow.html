@@ -5,7 +5,9 @@
 					<div class="well">
 
 						<h2>{{ ctrl.inventori.id ? "ID: " + ctrl.inventori.id : "Inventori Baru" }}</h2>
-
+						<div>
+							<img ng-src="{{ctrl.inventori.url_qrcode}}">
+						</div>
 							<label class="col-form-label">Nama</label>
 								<input class="form-control" type="text" ng-model="ctrl.inventori.nama">
 							<label class="col-form-label">Keterangan</label>

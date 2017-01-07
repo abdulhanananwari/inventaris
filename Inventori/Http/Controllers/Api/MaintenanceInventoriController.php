@@ -16,6 +16,7 @@ class MaintenanceInventoriController extends Controller {
         $this->maintenance = new MaintenanceInventoriModel();
         
         $this->transformer = new MaintenanceInventoriTransformer();
+        
         $this->dataName = 'maintenance_inventories';
     }
     

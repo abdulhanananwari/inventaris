@@ -30,6 +30,8 @@ class InventoriTransformer extends Fractal\TransformerAbstract {
             'jumlah_hari_sejak_maintenance_inventori_terakhir' => $inventori->calculate()->jumlahHariSejakMaintenanceTerakhir(),
             //menghitung jumlah hari setelah dilakukan maintenance barang inventaris terakhir
             'pic' => $inventori->pic ? json_decode($inventori->pic, true):[],
+            'uuid' => $inventori->uuid,
+            'url_qrcode' => $inventori->url_qrcode,
         ];
     }
 }

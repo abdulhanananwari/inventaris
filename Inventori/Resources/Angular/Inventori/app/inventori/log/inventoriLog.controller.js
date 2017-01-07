@@ -34,5 +34,8 @@ app
 			.success(function(data) {
 				vm.kondisi = data.data
 			})
+		vm.back = function() {
+			$state.go('inventoriShow', {id: data.data.id})
+		}
 });
 		

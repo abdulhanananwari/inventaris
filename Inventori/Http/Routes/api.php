@@ -16,6 +16,7 @@ Route::group(['prefix' => "api", 'middleware'=>$middleware], function() {
 		
 		Route::get('/', ['uses' => 'InventoriController@index','middleware' => 'auth.jwt_tumr:LIHAT_INVENTORI']);
 		Route::get('{id}', ['uses' => 'InventoriController@get','middleware' => 'auth.jwt_tumr:LIHAT_INVENTORI']);
+		Route::get('uuid/{id}', ['uses' => 'InventoriController@generate','middleware' => 'auth.jwt_tumr:LIHAT_INVENTORI']);
 		Route::post('/', ['uses' => 'InventoriController@store','middleware' => 'auth.jwt_tumr:EDIT_INVENTORI']);
 		Route::post('{id}', ['uses' => 'InventoriController@update','middleware' => 'auth.jwt_tumr:EDIT_INVENTORI']);
 		Route::delete('{id}', ['uses' => 'InventoriController@destroy']);
@@ -42,5 +43,7 @@ Route::group(['prefix' => "api", 'middleware'=>$middleware], function() {
 
 		Route::get('{name}', ['uses' => 'ConfigController@get']);
 	});
+
+	
 });
 	

@@ -11,7 +11,8 @@
         "laravel/framework": "5.3.*",
         "league/fractal": "^0.14.0",
         "predis/predis": "~1.0",
-        "league/flysystem-aws-s3-v3": "~1.0"
+        "league/flysystem-aws-s3-v3": "~1.0",
+         "simplesoftwareio/simple-qrcode": "~1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -28,7 +29,8 @@
             "App\\": "app/",
             "Inventori\\": "Inventori/",
             "Solumax\\": "Solumax",
-            "Wala\\": "Wala"
+            "Wala\\": "Wala",
+            "phpqrcode\\": "phpqrcode"
         }
     },
     "autoload-dev": {

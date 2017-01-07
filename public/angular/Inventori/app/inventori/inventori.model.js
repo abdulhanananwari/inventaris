@@ -12,6 +12,9 @@ app
 		inventoriModel.get = function(id) {
 			return $http.get(baseUrl + id)
 		}
+		inventoriModel.generate = function(inventori) {
+			return $http.get(baseUrl + 'uuid/' + id)
+		}
 		inventoriModel.store = function(inventori) {
 			return $http.post(baseUrl, inventori)
 		}

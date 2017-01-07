@@ -46,5 +46,6 @@ class InventoriModel extends Model {
     public function location() {
         return $this->belongsTo('Inventori\App\Location\LocationModel', 'id_lokasi');
     }
-
+    
+    
 }

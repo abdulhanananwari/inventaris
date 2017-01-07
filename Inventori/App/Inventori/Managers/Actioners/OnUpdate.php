@@ -4,7 +4,7 @@ namespace Inventori\App\Inventori\Managers\Actioners;
 
 use Inventori\App\Inventori\InventoriModel;
 
-class OnCreateOrUpdate {
+class OnUpdate {
     
     protected $inventori;
     

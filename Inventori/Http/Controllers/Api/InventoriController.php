@@ -19,7 +19,7 @@ class InventoriController extends Controller {
         $this->transformer = new  InventoriTransformer();
         $this->dataName = 'inventories';
     }
-    
+     
     public function index(Request $request) {
         
         $inventori = new InventoriModel();
@@ -36,10 +36,20 @@ class InventoriController extends Controller {
         return $this->formatCollection($inventoris, [], $inventoris);
     }
     
+    public function generate($id, Request $request) {
+
+        $inventori = $this->inventori->find($id);
+        
+        $inventori->action()->onCreate();
+        
+
+        return $this->formatItem($inventori);
+    }
+
     public function get($id, Request $request) {
         
         $inventori = $this->inventori->find($id);
-        
+
         return $this->formatItem($inventori);
     }
     
@@ -52,7 +62,8 @@ class InventoriController extends Controller {
             return $this->formatErrors($validation);
         }
 
-        $inventori->action()->onCreateOrUpdate();
+
+        $inventori->action()->onCreate();
 
         return $this->formatItem($inventori);
     }
@@ -62,7 +73,7 @@ class InventoriController extends Controller {
         $inventori = $this->inventori->find($id);
         $inventori->assign()->fromRequest($request);
         
-        $inventori->action()->onCreateOrUpdate();
+        $inventori->action()->onUpdate();
         
         return $this->formatItem($inventori);
     }

@@ -182,6 +182,8 @@ return [
 
         Solumax\AuthClient\SolumaxAuthClientProvider::class,
         Solumax\FileManager\SolumaxFileManagerProvider::class,
+
+
         Solumax\Logger\SolumaxLoggerProvider::class,
 
         
@@ -238,6 +240,7 @@ return [
 
         'ParsedJwt' => Wala\Jwt\Facade\ParsedJwtFacade::class,
         'SolLog' => Solumax\Logger\App\Log\Facade\LogFacade::class,
+        'SolFileManager' => \Solumax\FileManager\App\File\Facade\FileFacade::class,
 
     ],
 
