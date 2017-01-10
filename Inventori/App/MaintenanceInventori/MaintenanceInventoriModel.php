@@ -20,7 +20,9 @@ class MaintenanceInventoriModel extends Model {
     public function validate() {
     	return new Managers\Validator($this);
     }
-
+    public function action() {
+        return new Managers\Actioner($this);
+    }
     //Related
 
     

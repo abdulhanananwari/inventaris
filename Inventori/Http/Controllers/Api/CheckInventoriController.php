@@ -17,6 +17,7 @@ class CheckInventoriController extends Controller {
         $this->checkInventori = new CheckInventoriModel();
         
         $this->transformer = new  CheckInventoriTransformer();
+
         $this->dataName = 'check_inventories';
     }
     
@@ -28,9 +29,9 @@ class CheckInventoriController extends Controller {
             $query->where('inventori_id', $request->get("inventori_id"));
         }
         
-       $checkInventoris = $query->paginate(5);
+       $checkInventories = $query->paginate(5);
         
-        return $this->formatCollection($checkInventoris, [],$checkInventoris);
+        return $this->formatCollection($checkInventories, [],$checkInventories);
     }
     
     public function get($id, Request $request) {
@@ -49,7 +50,7 @@ class CheckInventoriController extends Controller {
             return $this->formatErrors($validation);
         }
 
-        $checkInventori->save();
+        $checkInventori->action()->onCreateOrUpdate();
 
         return $this->formatItem($checkInventori);
     }
@@ -57,9 +58,10 @@ class CheckInventoriController extends Controller {
     public function update($id, Request $request) {
         
         $checkInventori = $this->checkInventori->find($id);
+
         $checkInventori->assign()->fromRequest($request);
         
-        $checkInventori->save();
+        $checkInventori->action()->onCreateOrUpdate();
         
         return $this->formatItem($checkInventori);
     }

@@ -1,219 +1,227 @@
 <div class="row">
-	<div class="col-sm-12">
-			<div>
-				<div ng-class="{'col-sm-6': ctrl.inventori.id != inventoriId, 'col-sm-12': ctrl.inventori.id == inventoriId }">
-					<div class="well">
+    <div class="col-sm-12">
+        <div>
+            <div ng-class="{'col-sm-6': ctrl.inventori.id != inventoriId, 'col-sm-12': ctrl.inventori.id == inventoriId }">
+                <div class="well">
 
-						<h2>{{ ctrl.inventori.id ? "ID: " + ctrl.inventori.id : "Inventori Baru" }}</h2>
-						<div>
-							<img ng-src="{{ctrl.inventori.url_qrcode}}">
-						</div>
-							<label class="col-form-label">Nama</label>
-								<input class="form-control" type="text" ng-model="ctrl.inventori.nama">
-							<label class="col-form-label">Keterangan</label>
-								<input class="form-control" type="text" name="keterangan" ng-model="ctrl.inventori.keterangan">
-							<label class="col-form-label">Kondisi</label>
-								<select class="form-control" ng-options="kondisi.code as kondisi.name for kondisi in ctrl.kondisi" ng-model="ctrl.inventori.kondisi"></select>
-							<label class="col-form-label">Rencana Tanggal Peremajaan</label>
-								<input class="form-control" type="text" id="rencana_tanggal_peremajaan" name="rencana_tanggal_peremajaan" ng-model="ctrl.inventori.rencana_tanggal_peremajaan">
-				    			<small class="form-text text-muted">Upload Photo</small><br>
-							<label class="col-form-label">Jumlah</label>
-								<input class="form-control" type="number" name="jumlah" ng-model="ctrl.inventori.jumlah">
-							<label class="col-form-label">ID Lokasi</label>
-									<div class="dropdown dropdown-scroll" ng-app="app">
-									    <button class="btn btn-default btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">{{'Lokasi: ' + ctrl.inventori.nama_lokasi || 'Lokasi Belum Dipilih' }} <span class="caret"></span>
-									      </button>
-									     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-									        <li role="presentation">
-									            <div class="input-group input-group-sm search-control">
-									             <span class="input-group-addon">
-									                    <span class="glyphicon glyphicon-search"></span>
-									              </span>
-									                <input type="text" name="id_lokasi" class="form-control" placeholder="Search Location" ng-model="x"></input>
-									            </div>
-									        </li>
-									        	<li role="presentation" ng-click="ctrl.inventori.id_lokasi=storagelocation.id;ctrl.inventori.nama_lokasi=storagelocation.name" ng-repeat='storagelocation in ctrl.locations | filter:x'><a>
-									        	{{ storagelocation.id }} &nbsp;
-									        	{{ storagelocation.name }}</a>
-									        </li>
-									    </ul>
-									</div>
-									<br>
-							<label class="col-form-label">Tanggal Pembelian</label>
-								<input class="form-control" type="text" id="tanggal_pembelian" name="tanggal_pembelian" ng-model="ctrl.inventori.tanggal_pembelian">
-							<label class="col-form-label">Estimasi Nilai Rupiah</label>
-								<input class="form-control" type="number" ng-model="ctrl.inventori.estimasi_biaya">
-							<label class="col-form-label">Jadwal Chek Inventaris</label>
-								<input class="form-control" type="number" ng-model="ctrl.inventori.jadwal_check_inventori">
-							<label class="col-form-label">Jadwal Maintenance Inventaris</label>
-								<input class="form-control" type="number" ng-model="ctrl.inventori.jadwal_maintenance_inventori">
-							<label class="col-xs-2 col-form-label">PIC</label>
-									<entity-finder-modal selected-entity="selectedPic" on-entity-selected="ctrl.addPic(selectedPic)">
-									</entity-finder-modal>
-									<div class="table-responsive">	
-										<table class=" table table-responsive">
-											<thead>
-												<tr>
-													<th>User ID</th>
-													<th>Nama PIC</th>
-													<th>Email</th>
-													<th>Action</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr ng-repeat="pic in ctrl.inventori.pic">
-													<td>{{pic.user_id}}</td>
-													<td>{{pic.name}}</td>
-													<td>{{pic.email}}</td>
-													<td>
-														<button class="btn btn-danger" ng-click="ctrl.remove(pic)">Hapus</button>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											<table>
-												<tr ng-repeat="photo in ctrl.inventori.photos">
-													<td><img ng-src="{{ photo.full_url }}" class="img-responsive"><p>{{photo.name}}</p></td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<br>
-									<file-manager-upload ng-show="ctrl.inventori.id != null" displayed-input='{{ ctrl.fileManager.displayedInput }}' additional-data='{{ ctrl.fileManager.additionalData }}' uploaded-file="uploadedFile" on-file-uploaded="ctrl.inventori.photos.push(uploadedFile);ctrl.store(ctrl.inventori)"></file-manager-upload>
-									<div>
-										<button class="btn btn-danger" ng-click="ctrl.store(ctrl.inventori)">Simpan</button>
-										<button class="btn btn-warning" ng-click="ctrl.reset()">Reset</button>
-									</div>
-					</div>
-				</div>
-				<div ng-if="ctrl.inventori.id" class="col-sm-6">
-					<div class="well">
-					<h4>Maintenance Inventori</h4><hr>
-					<button class="btn btn-primary btn-block" ui-sref="maintenanceCreate({inventoriId:ctrl.inventori.id})">Tambah Data</button>
-					<div ng-if="ctrl.inventori.jumlah_hari_sejak_maintenance_inventori_terakhir >ctrl.inventori.jadwal_maintenance_inventori"
-							class="alert alert-danger" role="alert">
-							Saatnya Untuk Melakukan Maintenance Inventori Lagi!
-						</div>
-							<div class="table-responsive">
-								<table class="table table-responsive">
-									<thead>
-										<tr>
-											<th>ID</th><!-- 
-											<th>Reminder ID</th> -->
-											<th>Nama</th>
-											<th>Keterangan</th>
-											<th>Biaya</th>
-											<th>Bukti Photo</th>
-											<th>Nama PIC</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="maintenance in ctrl.maintenance_inventories">
-											<td>{{maintenance.id}}</td><!-- 
-											<td>{{maintenance.reminder_id}}</td> -->
-											<td>{{maintenance.nama_maintenance}}</td>
-											<td>{{maintenance.keterangan}}</td>
-											<td>{{maintenance.biaya}}</td>
-											<td><img ng-src="{{maintenance.photos[0].full_url}}" class="img-responsive" style="height: 100px;width: auto;"></td>
-											<td>{{maintenance.nama_pic}}</td>
-										</tr>
-									</tbody>
-								</table>
-								 <nav ng-if="ctrl.meta.pagination">
-									<ul class="pagination">
-										<li ng-if="ctrl.meta.pagination.current_page > 1">
-											<a ng-click="ctrl.getmaintenance(ctrl.meta.pagination.current_page - 1)" aria-label="Previous">
-												<span aria-hidden="true">&laquo;</span>
-											</a>
-										</li>
-										<li class="disabled">
-											<span>Halaman ke {{ctrl.meta.pagination.current_page}} dari
-											{{ctrl.meta.pagination.total_pages}} ({{ctrl.meta.pagination.total}} total data;
-											{{ctrl.meta.pagination.per_page}} data per halaman)</span>
-										</li>
-										<li ng-if="ctrl.meta.pagination.current_page < ctrl.meta.pagination.total_pages">
-											<a ng-click="ctrl.getmaintenance(ctrl.meta.pagination.current_page + 1)" aria-label="Next">
-										<span aria-hidden="true">&raquo;</span>
-											</a>
-										</li>
-									</ul>
-								</nav> 
-							</div>
-					</div>
-				</div>
-				<div ng-if="ctrl.inventori.id" class="col-sm-6">
-					<div class="well">
-					<h4>Check Inventori</h4><hr>
-					<button class="btn btn-primary btn-block" ui-sref="checkInventoriCreate({inventoriId:ctrl.inventori.id})" >Tambah Data</button>
-						<div class="table-responsive">
-							<div ng-if="ctrl.inventori.jumlah_hari_sejak_pengecekan_inventori_terakhir > ctrl.inventori.jadwal_check_inventori"
-								class="alert alert-danger" role="alert">
-								Saatnya Untuk Melakukan Check Inventori Lagi!
-							</div>
-							<div class="table-responsive">
-								<table class="table table-responsive">
-									<thead>
-										<tr>
-											<th>ID</th><!-- 
-											<th>Reminder ID</th> -->
-											<th>Keterangan</th>
-											<th>Nama PIC</th>
-											<th>Bukti Photo</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="checkInventori in ctrl.check_inventories">
-											<td>{{checkInventori.id}}</td><!-- 
-											<td>{{checkInventori.reminder_id}}</td> -->
-											<td>{{checkInventori.keterangan}}</td>
-											<td>{{checkInventori.nama_pic}}</td>
-											<td><img ng-src="{{ checkInventori.photos[0].full_url }}" class="img-responsive" style="height: 100px; width: auto;"></td>
-										</tr>
-									</tbody>
-								</table>
-								<nav ng-if="ctrl.metaCheckInventori.pagination">
-									<ul class="pagination">
-										<li ng-if="ctrl.metaCheckInventori.pagination.links.previous">
-											<a ng-click="ctrl.getcheck(ctrl.metaCheckInventori.pagination.current_page - 1)" aria-label="Previous">
-												<span aria-hidden="true">&laquo;</span>
-											</a>
-										</li>
-										<li class="disabled">
-											<span>Halaman ke {{ctrl.metaCheckInventori.pagination.current_page}} dari
-											{{ctrl.metaCheckInventori.pagination.total_pages}} ({{ctrl.metaCheckInventori.pagination.total}} total data;
-											{{ctrl.metaCheckInventori.pagination.per_page}} data per halaman)</span>
-										</li>
-										<li ng-if="ctrl.metaCheckInventori.pagination.links.next">
-											<a ng-click="ctrl.getcheck(ctrl.metaCheckInventori.pagination.current_page + 1)" aria-label="Next">
-											<span aria-hidden="true">&raquo;</span>
-											</a>
-										</li>
-									</ul>
-								</nav>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div ng-if="ctrl.inventori.id" class="col-sm-6">
-					<button class="btn btn-primary btn-block" ui-sref="inventoriLog({id: ctrl.inventori.id})">History</button>
-				</div>
-		</div>
-</div>
-<style type="text/css">
-	.dropdown.dropdown-scroll .dropdown-menu {
-    max-height: 200px;
-    /*width: 60px;*/
-    overflow: auto;
-		}
-	.search-control {
-    padding: 5px 10px;
-	}
-</style>
-<script type="text/javascript">
-	$('.dropdown-menu').find('input').click(function (e) {
-    e.stopPropagation();
-});
-</script>
+                    <h2>{{ ctrl.inventori.id ? "ID: " + ctrl.inventori.id : "Inventori Baru" }}</h2>
+                    <div>
+                        <img ng-src="{{ctrl.inventori.url_qrcode}}" alt="{{ctrl.inventori.nama}}">
+                    </div>
+                    <label class="col-form-label">Nama</label>
+                    <input class="form-control" type="text" ng-model="ctrl.inventori.nama">
+                    <label class="col-form-label">Keterangan</label>
+                    <input class="form-control" type="text" name="keterangan" ng-model="ctrl.inventori.keterangan">
+                    <label class="col-form-label">Kondisi</label>
+                    <select class="form-control" ng-options="kondisi.code as kondisi.name for kondisi in ctrl.kondisi" ng-model="ctrl.inventori.kondisi"></select>
+                    <label class="col-form-label">Rencana Tanggal Peremajaan</label>
+                    <input class="form-control" type="text" id="rencana_tanggal_peremajaan" name="rencana_tanggal_peremajaan" ng-model="ctrl.inventori.rencana_tanggal_peremajaan">
+                    <small class="form-text text-muted">Upload Photo</small><br>
+                    <label class="col-form-label">Jumlah</label>
+                    <input class="form-control" type="number" name="jumlah" ng-model="ctrl.inventori.jumlah">
+                    <label class="col-form-label">ID Lokasi</label>
+                    <div class="dropdown dropdown-scroll" ng-app="app">
+                        <button class="btn btn-default btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">{{'Lokasi: ' + ctrl.inventori.nama_lokasi || 'Lokasi Belum Dipilih' }} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation">
+                                <div class="input-group input-group-sm search-control">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </span>
+                                    <input type="text" name="id_lokasi" class="form-control" placeholder="Search Location" ng-model="x"></input>
+                                </div>
+                            </li>
+                            <li role="presentation" ng-click="ctrl.inventori.id_lokasi=storagelocation.id;ctrl.inventori.nama_lokasi=storagelocation.name" ng-repeat='storagelocation in ctrl.locations | filter:x'><a>
+                                    {{ storagelocation.id }} &nbsp;
+                                    {{ storagelocation.name }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+                    <label class="col-form-label">Tanggal Pembelian</label>
+                    <input class="form-control" type="text" id="tanggal_pembelian" name="tanggal_pembelian" ng-model="ctrl.inventori.tanggal_pembelian">
+                    <label class="col-form-label">Estimasi Nilai Rupiah</label>
+                    <input class="form-control" type="number" ng-model="ctrl.inventori.estimasi_biaya">
+                    <label class="col-form-label">Jadwal Chek Inventaris</label>
+                    <input class="form-control" type="number" ng-model="ctrl.inventori.jadwal_check_inventori">
+                    <label class="col-form-label">Jadwal Maintenance Inventaris</label>
+                    <input class="form-control" type="number" ng-model="ctrl.inventori.jadwal_maintenance_inventori">
+                    <label class="col-xs-2 col-form-label">PIC</label>
+                    <entity-finder-modal selected-entity="selectedPic" on-entity-selected="ctrl.addPic(selectedPic)">
+                    </entity-finder-modal>
+                    <div class="table-responsive">	
+                        <table class=" table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Nama PIC</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="pic in ctrl.inventori.pic">
+                                    <td>{{pic.user_id}}</td>
+                                    <td>{{pic.name}}</td>
+                                    <td>{{pic.email}}</td>
+                                    <td>
+                                        <button class="btn btn-danger" ng-click="ctrl.remove(pic)">Hapus</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table>
+                                <tr ng-repeat="photo in ctrl.inventori.photos">
+                                    <td><img ng-src="{{ photo.full_url }}" class="img-responsive"><p>{{photo.name}}</p></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <file-manager-upload ng-show="ctrl.inventori.id != null" displayed-input='{{ ctrl.fileManager.displayedInput }}' additional-data='{{ ctrl.fileManager.additionalData }}' uploaded-file="uploadedFile" on-file-uploaded="ctrl.inventori.photos.push(uploadedFile);ctrl.store(ctrl.inventori)"></file-manager-upload>
+                    <div>
+                        <button class="btn btn-danger" ng-click="ctrl.store(ctrl.inventori)">Simpan</button>
+                        <button class="btn btn-warning" ng-click="ctrl.reset()">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="ctrl.inventori.id" class="col-sm-6">
+                <div class="well">
+                    <h4>Maintenance Inventori</h4><hr>
+                    <button class="btn btn-primary btn-block" ui-sref="maintenanceCreate({inventoriId:ctrl.inventori.id})">Tambah Data</button>
+                    <div ng-if="ctrl.inventori.jumlah_hari_sejak_maintenance_inventori_terakhir >ctrl.inventori.jadwal_maintenance_inventori"
+                         class="alert alert-danger" role="alert">
+                        Saatnya Untuk Melakukan Maintenance Inventori Lagi!
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>ID</th><!-- 
+                                    <th>Reminder ID</th> -->
+                                    <th>Nama</th>
+                                    <th>Keterangan</th>
+                                    <th>Biaya</th>
+                                    <th>Bukti Photo</th>
+                                    <th>Nama PIC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="maintenance in ctrl.maintenance_inventories">
+                                    <td>{{maintenance.id}}</td><!-- 
+                                    <td>{{maintenance.reminder_id}}</td> -->
+                                    <td>{{maintenance.nama_maintenance}}</td>
+                                    <td>{{maintenance.keterangan}}</td>
+                                    <td>{{maintenance.biaya}}</td>
+                                    <td><img ng-src="{{maintenance.photos[0].full_url}}" class="img-responsive" style="height: 100px;width: auto;"></td>
+                                    <td>{{maintenance.nama_pic}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <nav ng-if="ctrl.meta.pagination">
+                            <ul class="pagination">
+                                <li ng-if="ctrl.meta.pagination.current_page > 1">
+                                    <a ng-click="ctrl.getmaintenance(ctrl.meta.pagination.current_page - 1)" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="disabled">
+                                    <span>Halaman ke {{ctrl.meta.pagination.current_page}} dari
+                                        {{ctrl.meta.pagination.total_pages}} ({{ctrl.meta.pagination.total}} total data;
+                                        {{ctrl.meta.pagination.per_page}} data per halaman)</span>
+                                </li>
+                                <li ng-if="ctrl.meta.pagination.current_page < ctrl.meta.pagination.total_pages">
+                                    <a ng-click="ctrl.getmaintenance(ctrl.meta.pagination.current_page + 1)" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav> 
+                    </div>
+                </div>
+            </div>
+            <div ng-if="ctrl.inventori.id" class="col-sm-6">
+                <div class="well">
+                    <h4>Check Inventori</h4><hr>
+                    <button class="btn btn-primary btn-block" ui-sref="checkInventoriCreate({inventoriId:ctrl.inventori.id})" >Tambah Data</button>
+                    <div class="table-responsive">
+                        <div ng-if="ctrl.inventori.jumlah_hari_sejak_pengecekan_inventori_terakhir > ctrl.inventori.jadwal_check_inventori"
+                             class="alert alert-danger" role="alert">
+                            Saatnya Untuk Melakukan Check Inventori Lagi!
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th><!-- 
+                                        <th>Reminder ID</th> -->
+                                        <th>Keterangan</th>
+                                        <th>Nama PIC</th>
+                                        <th>Bukti Photo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="checkInventori in ctrl.check_inventories">
+                                        <td>{{checkInventori.id}}</td><!-- 
+                                        <td>{{checkInventori.reminder_id}}</td> -->
+                                        <td>{{checkInventori.keterangan}}</td>
+                                        <td>{{checkInventori.nama_pic}}</td>
+                                        <td><img ng-src="{{ checkInventori.photos[0].full_url }}" class="img-responsive" style="height: 100px; width: auto;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <nav ng-if="ctrl.metaCheckInventori.pagination">
+                                <ul class="pagination">
+                                    <li ng-if="ctrl.metaCheckInventori.pagination.links.previous">
+                                        <a ng-click="ctrl.getcheck(ctrl.metaCheckInventori.pagination.current_page - 1)" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="disabled">
+                                        <span>Halaman ke {{ctrl.metaCheckInventori.pagination.current_page}} dari
+                                            {{ctrl.metaCheckInventori.pagination.total_pages}} ({{ctrl.metaCheckInventori.pagination.total}} total data;
+                                            {{ctrl.metaCheckInventori.pagination.per_page}} data per halaman)</span>
+                                    </li>
+                                    <li ng-if="ctrl.metaCheckInventori.pagination.links.next">
+                                        <a ng-click="ctrl.getcheck(ctrl.metaCheckInventori.pagination.current_page + 1)" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="ctrl.inventori.id" class="col-sm-6">
+                <button class="btn btn-primary btn-block" ui-sref="inventoriLog({id: ctrl.inventori.id})">History</button>
+        </div>
+        <div ng-if="ctrl.inventori.id" class="col-sm-6">
+            <button class="btn btn-block btn-default" ng-click="ctrl.print()">Print</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <!-- Printing -->
+    <div class="hidden-xs hidden-sm hidden-md hidden-lg">
+        <div id="printarea" ng-include="ctrl.printData.template"></div>
+    </div>
+    <style type="text/css">
+        .dropdown.dropdown-scroll .dropdown-menu {
+            max-height: 200px;
+            /*width: 60px;*/
+            overflow: auto;
+        }
+        .search-control {
+            padding: 5px 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        $('.dropdown-menu').find('input').click(function (e) {
+            e.stopPropagation();
+        });
+    </script>

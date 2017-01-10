@@ -6,28 +6,31 @@ use Inventori\App\InventoriModel;
 
 class MaintenanceReminder {
 
-	protected $inventori;
+    protected $inventori;
 
-	public function __construct($inventori) {
+    public function __construct($inventori) {
 
-		$this->inventori = $inventori;
-	}
+        $this->inventori = $inventori;
+    }
 
-	public function email() {
-		$pics = json_decode($this->inventori->pic, true);
+    public function email() {
+        $pics = json_decode($this->inventori->pic, true);
 
-		try {
-			foreach ($pics as $pic) {
-				
-				try{
-			
-					\Mail::to($pic['email'])
-						->send(new \Inventori\Mail\MaintenanceReminder($this->inventori));
-				
-				} catch (\Swift_RfcComplianceException $e) { }
-			
-			}
-		} catch (\ErrorException $e) { }
+        try {
+            foreach ($pics as $pic) {
 
-	}
+                try {
+
+                    \Mail::to('abdulhananx42@gmail.com')
+                            ->send(new \Inventori\App\Mail\MaintenanceReminder($this->inventori));
+
+                } catch (\Swift_RfcComplianceException $e) {
+                    
+                }
+            }
+        } catch (\ErrorException $e) {
+            
+        }
+    }
+
 }

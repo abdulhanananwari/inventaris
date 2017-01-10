@@ -1,27 +1,27 @@
 <div class="row">
-	<div class="col-sm-12">
-		<div class="table-responsive">
-		<button class="btn btn-info btn-block" ui-sref="checkInventoriCreate">Tambah Data</button>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Reminder ID</th>
-						<th>Keterangan</th>
-						<th>Nama PIC</th>
-						<th>Bukti Photo</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="checkInventori in ctrl.check_inventories">
-						<td>{{checkInventori.id}}</td>
-						<td>{{checkInventori.reminder_id}}</td>
-						<td>{{checkInventori.keterangan}}</td>
-						<td>{{checkInventori.nama_pic}}</td>
-						<td>{{checkInventori.photos}}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+    <div class="col-sm-12">
+        <div class="table-responsive">
+            <button class="btn btn-info btn-block" ui-sref="checkInventoriCreate">Tambah Data</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Reminder ID</th>
+                        <th>Keterangan</th>
+                        <th>Nama PIC</th>
+                        <th>Bukti Photo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="checkInventori in ctrl.check_inventories">
+                        <td>{{checkInventori.id}}</td>
+                        <td>{{checkInventori.reminder_id}}</td>
+                        <td>{{checkInventori.keterangan}}</td>
+                        <td>{{checkInventori.nama_pic}}</td>
+                        <td>{{checkInventori.photos}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

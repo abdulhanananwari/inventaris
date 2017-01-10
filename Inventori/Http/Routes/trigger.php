@@ -1,33 +1,32 @@
 <?php
 
-$middleware = ['wala.jwt.request.parser','wala.jwt.request.validation','auth.db.overwrite','auth.req.tenantIdOverwrite'];
+$middleware = ['wala.jwt.request.parser', 'wala.jwt.request.validation', 'auth.db.overwrite', 'auth.req.tenantIdOverwrite'];
 
 Route::group(['prefix' => 'trigger', 'middleware' => $middleware], function() {
 
-	Route::get('email-maintenance-reminder', function() {
+    Route::get('email-maintenance-reminder', function() {
 
-		$inventoris = Inventori\App\Inventori\InventoriModel::all();
+        $inventoris = Inventori\App\Inventori\InventoriModel::all();
 
-			foreach ($inventoris as $inventori) {
-				
-				if($inventori->calculate()->JumlahHariSejakMaintenanceTerakhir() > $inventori->jadwal_maintenance_inventori) {
+        foreach ($inventoris as $inventori) {
 
-					$inventori->email()->maintenanceReminder();
-				}
-			}
-	});
+            if ($inventori->calculate()->JumlahHariSejakMaintenanceTerakhir() > $inventori->jadwal_maintenance_inventori) {
 
-	Route::get('email-checkinventori-reminder', function() {
+                $inventori->email()->maintenanceReminder();
+            }
+        }
+    });
 
-		$inventoris = Inventori\App\Inventori\InventoriModel::all();
+    Route::get('email-checkinventori-reminder', function() {
 
-			foreach ($inventoris as $inventori) {
-				
-				if ($inventori->calculate()->JumlahHariSejakCheckTerakhir() > $inventori->jadwal_check_inventori) {
-					
-					$inventori->email()->checkInventoriReminder();
-				}
-			}
-	});
+        $inventoris = Inventori\App\Inventori\InventoriModel::all();
 
+        foreach ($inventoris as $inventori) {
+
+            if ($inventori->calculate()->jumlahHariSejakCheckTerakhir() > $inventori->jadwal_check_inventori) {
+               
+                $inventori->email()->checkInventoriReminder();
+            }
+        }
+    });
 });

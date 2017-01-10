@@ -4,8 +4,8 @@
 	<title></title>
 </head>
 <body>
-	<p>Maintenance : {{ $viewData['inventori']->nama }}</p>
+	<p>Nama Inventaris : {{ $viewData['inventori']->nama }}</p>
 
-	<p>Terakhir Maintenance Pada Tanggal : {{ $viewData['inventori']->created_at->toDateTimeString() }}</p>
+	<a href="http://192.168.0.43:10031/Angular/Inventori/index.html#/inventori/show/{{$viewData['inventori']->id }}">Klik Disini</a>
 </body>
 </html>

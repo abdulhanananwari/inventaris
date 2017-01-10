@@ -1,125 +1,137 @@
 app
-	.controller('InventoriShowController', function (InventoriModel,
-		MaintenanceInventoriModel,
-		CheckInventoriModel,
-		LocationModel,
-		ConfigModel,
-		$state) {
-		var vm = this;
+        .controller('InventoriShowController', function (InventoriModel,
+                MaintenanceInventoriModel,
+                CheckInventoriModel,
+                LocationModel,
+                ConfigModel,
+                $state) {
+            var vm = this;
 
-		vm.storagelocation = {}
+            vm.storagelocation = {}
 
-		vm.inventori = {
-			tanggal_pembelian: moment().format("YYYY-MM-DD"),
-			rencana_tanggal_peremajaan: moment().format("YYYY-MM-DD"),
-			pic: []
-		}
+            vm.inventori = {
+                tanggal_pembelian: moment().format("YYYY-MM-DD"),
+                rencana_tanggal_peremajaan: moment().format("YYYY-MM-DD"),
+                pic: []
+            }
 
-		$( "#rencana_tanggal_peremajaan" ).datepicker({ dateFormat: "yy-mm-dd" });
-		$( "#tanggal_pembelian" ).datepicker({ dateFormat: "yy-mm-dd" });
-		
-		vm.store = function(inventori) {
-			if (!inventori.id) {
+            $("#rencana_tanggal_peremajaan").datepicker({dateFormat: "yy-mm-dd"});
+            $("#tanggal_pembelian").datepicker({dateFormat: "yy-mm-dd"});
 
-				InventoriModel.store(inventori)
-				.success(function(data) {
-					alert('Data Berhasil Di Simpan')
-					$state.go('inventoriShow', {id: data.data.id})
-					
-				})
-			} else {
-				InventoriModel.update(inventori.id, inventori)
-				.success(function(data) {
-					vm.inventori = data.data
-					alert('Data Berhasil Di Update')
-				})
-			}
-		}
-		vm.reset = function() {
-			$state.go('inventoriShow', {id: ''}, {reload: true})
-		}
+            vm.printData = {
+                template: 'app/inventori/print/thermal.html'
+            }
+            vm.print = function() {
+                window.setTimeout(function() {
 
-		vm.addPic = function(pic) {
+                    var w = window.open();
+                    w.document.write($('#printarea').html());
+                    w.print();
+                    w.close();
+                }, 500);
+            }
+            vm.store = function (inventori) {
+                if (!inventori.id) {
 
-			if (_.isEmpty(pic.email)) {
+                    InventoriModel.store(inventori)
+                            .success(function (data) {
+                                alert('Data Berhasil Di Simpan')
+                                $state.go('inventoriShow', {id: data.data.id})
 
-					alert('Email Diperlukan')
-					return ;
-			}
+                            })
+                } else {
+                    InventoriModel.update(inventori.id, inventori)
+                            .success(function (data) {
+                                vm.inventori = data.data
+                                alert('Data Berhasil Di Update')
+                            })
+                }
+            }
+            vm.reset = function () {
 
-			vm.inventori.pic .push( _.pick(pic,['user_id','name','email']));
-		}
+            }
+
+            vm.addPic = function (pic) {
+
+                if (_.isEmpty(pic.email)) {
+
+                    alert('Email Diperlukan')
+                    return;
+                }
+
+                vm.inventori.pic.push(_.pick(pic, ['user_id', 'name', 'email']));
+            }
 
 
-		vm.remove=function(pic) {
-			_.remove(vm.inventori.pic, pic);
-		}
+            vm.remove = function (pic) {
+                _.remove(vm.inventori.pic, pic);
+            }
 
 
-		vm.filter = {
-			inventori_id: $state.params.id
-		}
+            vm.filter = {
+                inventori_id: $state.params.id
+            }
 
-		vm.getmaintenance = function(page) {
-			if (page) {
-				vm.filter.page = page;
-			}
+            vm.getmaintenance = function (page) {
+                if (page) {
+                    vm.filter.page = page;
+                }
 
-			MaintenanceInventoriModel.index(vm.filter)
-			.success(function(data) {
-				vm.maintenance_inventories = data.data;
-				vm.meta =data.meta;
-			})
+                MaintenanceInventoriModel.index(vm.filter)
+                        .success(function (data) {
+                            vm.maintenance_inventories = data.data;
+                            vm.meta = data.meta;
+                        })
 
-		}
-		
+            }
 
-		vm.getcheck = function(page) {
-			if (page) {
-				vm.filter.page = page;
-			}
 
-			CheckInventoriModel.index(vm.filter)
-			.success(function(data) {
-				vm.check_inventories = data.data;
-				vm.metaCheckInventori =data.meta;
-			})
-		} 
+            vm.getcheck = function (page) {
+                if (page) {
+                    vm.filter.page = page;
+                }
 
-		if ($state.params.id) {
+                CheckInventoriModel.index(vm.filter)
+                        .success(function (data) {
+                            vm.check_inventories = data.data;
+                            vm.metaCheckInventori = data.meta;
+                        })
+            }
 
-			InventoriModel.get($state.params.id)
-			.success(function(data) {
-				vm.inventori = data.data;
-			})
+            if ($state.params.id) {
 
-			vm.getcheck()
+                InventoriModel.get($state.params.id)
+                .success(function (data) {
+                    vm.inventori = data.data;
+                })
 
-			vm.getmaintenance()
-		} 
-		
-		ConfigModel.get('kondisi')
-		.success(function(data) {
-			vm.kondisi = data.data
-		})
+                vm.getcheck()
 
-		LocationModel.index()
-		.success(function(data) {
-			vm.locations = data.data;
-		})
+                vm.getmaintenance()
+            }
 
-		vm.fileManager = {
-			displayedInput: JSON.stringify({
-				name: { label: "Keterangan", show: true },
-				file: { label : "Bukti Photo", show : true },
-				reset: {show: true}
-			}),
-			additionalData: JSON.stringify({
-				path: 'inventori',
-				subpath: $state.params.id,
-				fileable_type: 'Inventori',
-				fileable_id: $state.params.id
-			})
-		}
+            ConfigModel.get('kondisi')
+                    .success(function (data) {
+                        vm.kondisi = data.data
+                    })
 
-	});
+            LocationModel.index()
+                    .success(function (data) {
+                        vm.locations = data.data;
+                    })
+
+            vm.fileManager = {
+                displayedInput: JSON.stringify({
+                    name: {label: "Keterangan", show: true},
+                    file: {label: "Bukti Photo", show: true},
+                    reset: {show: true}
+                }),
+                additionalData: JSON.stringify({
+                    path: 'inventori',
+                    subpath: $state.params.id,
+                    fileable_type: 'Inventori',
+                    fileable_id: $state.params.id
+                })
+            }
+
+        });

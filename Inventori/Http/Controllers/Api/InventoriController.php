@@ -29,9 +29,7 @@ class InventoriController extends Controller {
             $query->where("nama", "LIKE", "%" . $request->get('nama') . "%");
         }
 
-
         $inventoris = $query->paginate(20);
-
 
         return $this->formatCollection($inventoris, [], $inventoris);
     }
@@ -40,14 +38,14 @@ class InventoriController extends Controller {
 
         $inventori = $this->inventori->find($id);
 
-        $inventori->action()->onCreate();
+        $inventori->action()->onGenerateUuidAndQrCode();
 
 
         return $this->formatItem($inventori);
     }
 
     public function get($id, Request $request) {
-
+        
         $inventori = $this->inventori->find($id);
 
         return $this->formatItem($inventori);
@@ -77,17 +75,8 @@ class InventoriController extends Controller {
         if ($validation !== true) {
             return $this->formatErrors($validation);
         }
-        
+
         $inventori->action()->onCreateAndUpdate();
-
-        return $this->formatItem($inventori);
-    }
-
-    public function destroy($id) {
-
-        $inventori = $this->$inventori->find($id);
-
-        $inventori->delete();
 
         return $this->formatItem($inventori);
     }

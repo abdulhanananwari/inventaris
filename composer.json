@@ -11,8 +11,7 @@
         "laravel/framework": "5.3.*",
         "league/fractal": "^0.14.0",
         "predis/predis": "~1.0",
-        "league/flysystem-aws-s3-v3": "~1.0",
-         "simplesoftwareio/simple-qrcode": "~1"
+        "league/flysystem-aws-s3-v3": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

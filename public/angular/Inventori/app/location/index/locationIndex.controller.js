@@ -1,56 +1,56 @@
 
 app
-	.controller('LocationIndexController', function(
-		LocationModel) {
-		var vm = this
+        .controller('LocationIndexController', function (
+                LocationModel) {
+            var vm = this
 
-		vm.new = function() {
+            vm.new = function () {
 
-			vm.storagelocation = {}
+                vm.storagelocation = {}
 
-			$('#edit-data').modal('show')
+                $('#edit-data').modal('show')
 
-		}
+            }
 
-		vm.store = function(storagelocation) {
-			
-				/*console.log(storagelocation);*/
+            vm.store = function (storagelocation) {
 
-			if (!storagelocation.id) {
-					
-					LocationModel.store(storagelocation)
-					.success(function(data) {
-						vm.get()
+                /*console.log(storagelocation);*/
 
-					})
+                if (!storagelocation.id) {
 
-			} else {
+                    LocationModel.store(storagelocation)
+                            .success(function (data) {
+                                vm.get()
 
-				LocationModel.update(storagelocation.id, storagelocation)
-				.success(function(data) {
-					vm.get()
-					vm.storagelocation = data.data
-					alert('Data Berhasil Di update')
-				})
-				
-			}
+                            })
 
-		}
+                } else {
 
-		vm.edit = function(storagelocation) {
-			vm.storagelocation = storagelocation
-			$('#edit-data').modal('show')
-		}
+                    LocationModel.update(storagelocation.id, storagelocation)
+                            .success(function (data) {
+                                vm.get()
+                                vm.storagelocation = data.data
+                                alert('Data Berhasil Di update')
+                            })
 
-		vm.filter = {};
+                }
 
-		vm.get = function() {
+            }
 
-			LocationModel.index(vm.filter)
-			.success(function(data) {
-				vm.locations = data.data;
-			})
-		} 
+            vm.edit = function (storagelocation) {
+                vm.storagelocation = storagelocation
+                $('#edit-data').modal('show')
+            }
 
-		vm.get();
-	});
+            vm.filter = {};
+
+            vm.get = function () {
+
+                LocationModel.index(vm.filter)
+                        .success(function (data) {
+                            vm.locations = data.data;
+                        })
+            }
+
+            vm.get();
+        });

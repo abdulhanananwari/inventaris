@@ -1,6 +1,6 @@
 <?php
 
-namespace Inventori\Mail;
+namespace Inventori\App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Inventori\App\Inventori\InventoriModel;
 
-class MaintenaceReminder extends Mailable
+class CheckInventoriReminder extends Mailable
 {
     use Queueable, SerializesModels;
 

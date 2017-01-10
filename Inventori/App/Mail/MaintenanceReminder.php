@@ -1,6 +1,6 @@
 <?php
 
-namespace Inventori\Mail;
+namespace Inventori\App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Inventori\App\Inventori\InventoriModel;
 
-class MaintenaceReminder extends Mailable
+class MaintenanceReminder extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -44,7 +44,7 @@ class MaintenaceReminder extends Mailable
         	'inventori'=> $this->inventori
         ];
 
-        return $this->view('inventori.emails::inventori.maintenaceReminder')
+        return $this->view('inventori.emails::inventori.maintenanceReminder')
         		->with('viewData', $viewData);
     }
 }

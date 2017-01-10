@@ -1,62 +1,62 @@
 app
-	.controller('CheckInventoriCreateController', function (CheckInventoriModel,
-		InventoriModel,
-		$state) {
-		var vm = this;
-		
-		vm.checkInventori = {
-			inventori_id: $state.params.inventoriId,
-			photos:[]
-		}
+        .controller('CheckInventoriCreateController', function (CheckInventoriModel,
+                InventoriModel,
+                $state) {
+            var vm = this;
 
-		if ($state.params.id) {
+            vm.checkInventori = {
+                inventori_id: $state.params.inventoriId,
+                photos: []
+            }
 
-			CheckInventoriModel.get($state.params.id)
-			.success(function(data) {
-				vm.checkInventori = data.data;
-			})
-		}
+            if ($state.params.id) {
 
-		vm.store = function(checkInventori) {
+                CheckInventoriModel.get($state.params.id)
+                        .success(function (data) {
+                            vm.checkInventori = data.data;
+                        })
+            }
 
-			if (!checkInventori.id) {
+            vm.store = function (checkInventori) {
 
-				vm.checkInventori = {}
+                if (!checkInventori.id) {
 
-				CheckInventoriModel.store(checkInventori)
-				.success(function(data) {
-					alert('Data Berhasil Di Simpan. Silahkan upload foto sekarang.')
-					$state.go('checkInventoriCreate', {id: data.data.id})
-				})
+                    vm.checkInventori = {}
 
-			} else {
+                    CheckInventoriModel.store(checkInventori)
+                            .success(function (data) {
+                                alert('Data Berhasil Di Simpan. Silahkan upload foto sekarang.')
+                                $state.go('checkInventoriCreate', {id: data.data.id})
+                            })
 
-				CheckInventoriModel.update(checkInventori.id, checkInventori)
-				.success(function(data) {
-					vm.checkInventori = data.data;
-				})
-			}
-		}
-		vm.reset = function() {
-			$state.go('checkInventoriCreate', {id: ''}, {reload: true})
-		}
+                } else {
 
-		vm.addPhotos =function(photos) {
+                    CheckInventoriModel.update(checkInventori.id, checkInventori)
+                            .success(function (data) {
+                                vm.checkInventori = data.data;
+                            })
+                }
+            }
+            vm.reset = function () {
+                $state.go('checkInventoriCreate', {id: ''}, {reload: true})
+            }
 
-			vm.checkInventori.photos .push( _.pick(photos,['id','uuid']));
-		}
+            vm.addPhotos = function (photos) {
 
-		vm.fileManager = {
-			displayedInput: JSON.stringify({
-				name: { label: "Keterangan", show: true },
-				file: { label : "Bukti Photo", show : true },
-				reset: {show: true}
-			}),
-			additionalData: JSON.stringify({
-				path: 'check-inventori',
-				subpath: $state.params.id,
-				fileable_type: 'CheckInventori',
-				fileable_id: $state.params.id
-			})
-		}
-	});
+                vm.checkInventori.photos.push(_.pick(photos, ['id', 'uuid']));
+            }
+
+            vm.fileManager = {
+                displayedInput: JSON.stringify({
+                    name: {label: "Keterangan", show: true},
+                    file: {label: "Bukti Photo", show: true},
+                    reset: {show: true}
+                }),
+                additionalData: JSON.stringify({
+                    path: 'check-inventori',
+                    subpath: $state.params.id,
+                    fileable_type: 'CheckInventori',
+                    fileable_id: $state.params.id
+                })
+            }
+        });

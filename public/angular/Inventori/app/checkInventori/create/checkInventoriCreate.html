@@ -1,27 +1,25 @@
 <div class="row">
-	<div class="col-sm-12">
-			<!-- <label class="col-form-label">Reminder ID</label>
-					<input type="hidden" name="id">
-					<input class="form-control" type="text" name="reminder_id" ng-model="ctrl.checkInventori.reminder_id"> -->
-					
-					<label class="col-form-label">Keterangan</label>
-					<input class="form-control" type="text" name="keterangan" ng-model="ctrl.checkInventori.keterangan">
-					<div class="row">
-						<div class="col-sm-12">
-							<table>
-								<tr ng-repeat="photo in ctrl.checkInventori.photos">
-									<td><img ng-src=" {{ photo.full_url }}" class="img-responsive"><p>{{photo.name}}</p></td>
-									
-								</tr>
-							</table>
-						</div>
-					</div>
-					<br>
-					<file-manager-upload ng-show="ctrl.checkInventori.id != null" displayed-input='{{ ctrl.fileManager.displayedInput }}' additional-data='{{ ctrl.fileManager.additionalData }}' uploaded-file="uploadedFile" on-file-uploaded="ctrl.checkInventori.photos.push(uploadedFile);ctrl.store(ctrl.checkInventori)"></file-manager-upload>
+    <div class="col-sm-12">
+        <!-- <label class="col-form-label">Reminder ID</label>
+                        <input type="hidden" name="id">
+                        <input class="form-control" type="text" name="reminder_id" ng-model="ctrl.checkInventori.reminder_id"> -->
 
-    		<div>
-				<button class="btn btn-danger" ng-click="ctrl.store(ctrl.checkInventori)">Simpan</button>
-			</div>
-		</div>
-	</div>
+        <label class="col-form-label">Keterangan</label>
+        <input class="form-control" type="text" name="keterangan" ng-model="ctrl.checkInventori.keterangan">
+        <div class="row">
+            <div class="col-sm-12">
+                <table>
+                    <tr ng-repeat="photo in ctrl.checkInventori.photos">
+                        <td><img ng-src=" {{ photo.full_url }}" class="img-responsive"><p>{{photo.name}}</p></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+        <file-manager-upload ng-show="ctrl.checkInventori.id != null" displayed-input='{{ ctrl.fileManager.displayedInput }}' additional-data='{{ ctrl.fileManager.additionalData }}' uploaded-file="uploadedFile" on-file-uploaded="ctrl.checkInventori.photos.push(uploadedFile);ctrl.store(ctrl.checkInventori)"></file-manager-upload>
+        <div>
+            <button class="btn btn-danger" ng-click="ctrl.store(ctrl.checkInventori)">Simpan</button>
+        </div>
+    </div>
+</div>
 </div>
