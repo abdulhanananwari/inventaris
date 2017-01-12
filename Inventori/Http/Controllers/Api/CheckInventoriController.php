@@ -50,7 +50,7 @@ class CheckInventoriController extends Controller {
             return $this->formatErrors($validation);
         }
 
-        $checkInventori->action()->onCreateOrUpdate();
+         $checkInventori->save();
 
         return $this->formatItem($checkInventori);
     }
@@ -61,7 +61,7 @@ class CheckInventoriController extends Controller {
 
         $checkInventori->assign()->fromRequest($request);
         
-        $checkInventori->action()->onCreateOrUpdate();
+        $checkInventori->save();
         
         return $this->formatItem($checkInventori);
     }

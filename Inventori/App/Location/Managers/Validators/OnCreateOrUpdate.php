@@ -9,6 +9,7 @@ class OnCreateOrUpdate {
     protected $location;
 
     public function __construct(LocationModel $location) {
+        
         $this->location = $location;
     }
 

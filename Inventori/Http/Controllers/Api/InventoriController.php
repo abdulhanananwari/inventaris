@@ -28,6 +28,16 @@ class InventoriController extends Controller {
         if ($request->has('nama')) {
             $query->where("nama", "LIKE", "%" . $request->get('nama') . "%");
         }
+        if ($request->has('maintenance_pending')){
+           $query->join('maintenance_inventories', 'inventories.id', '=', 'maintenance_inventories.inventori_id')
+                    ->select('inventories.*',
+                             'maintenance_inventories.created_at')
+                    ->where('inventories.created_at', '>', ' maintenance_inventories.created_at')
+                    ->orderBy('maintenance_inventories.created_at', 'desc')->first()
+                    ->get();
+        }
+        
+
 
         $inventoris = $query->paginate(20);
 

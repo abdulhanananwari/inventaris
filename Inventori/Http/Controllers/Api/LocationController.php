@@ -51,8 +51,8 @@ class LocationController extends Controller {
             return $this->formatErrors($validation);
         }
 
-        $location->action()->onCreateOrUpdate();
-
+        $location->save();
+        
         return $this->formatItem($location);
     }
 
@@ -66,7 +66,7 @@ class LocationController extends Controller {
             return $this->formatErrors($validation);
         }
 
-        $location->action()->onCreateOrUpdate();
+       $location->save();
 
         return $this->formatItem($location);
     }

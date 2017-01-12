@@ -32,3 +32,4 @@ class InventoriTransformer extends Fractal\TransformerAbstract {
     }
 
 }
+             

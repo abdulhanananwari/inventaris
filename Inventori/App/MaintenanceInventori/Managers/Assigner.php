@@ -14,7 +14,6 @@ class Assigner extends Manager {
     }
     
     public function __call($name, $arguments) {
-        return $this->managerCaller($name, $arguments, $this->maintenance,
-                __NAMESPACE__, 'Assigners', 'assign');
+        return $this->managerCaller($name, $arguments, $this->maintenance, __NAMESPACE__, 'Assigners', 'assign');
     }
 }

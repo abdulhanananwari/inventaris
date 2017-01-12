@@ -5,7 +5,7 @@ namespace Inventori\App\MaintenanceInventori\Managers;
 use Inventori\App\MaintenanceInventori\MaintenanceInventoriModel;
 use Solumax\PhpHelper\App\ManagerBase as Manager;
 
-class Assigner extends Manager {
+class Actioner extends Manager {
     
     protected $maintenance;
     
