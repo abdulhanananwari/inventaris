@@ -7,8 +7,12 @@ app
             var vm = this;
 
             vm.filter = {};
+            
+                console.log(vm.filter)
 
             vm.get = function (page) {
+
+                console.log(vm.filter)
 
                 if (page) {
                     vm.filter.page = page;

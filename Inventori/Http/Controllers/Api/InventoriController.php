@@ -28,18 +28,49 @@ class InventoriController extends Controller {
         if ($request->has('nama')) {
             $query->where("nama", "LIKE", "%" . $request->get('nama') . "%");
         }
+        
         if ($request->has('maintenance_pending')){
-           $query->join('maintenance_inventories', 'inventories.id', '=', 'maintenance_inventories.inventori_id')
-                    ->select('inventories.*',
-                             'maintenance_inventories.created_at')
-                    ->where('inventories.created_at', '>', ' maintenance_inventories.created_at')
-                    ->orderBy('maintenance_inventories.created_at', 'desc')->first()
-                    ->get();
+            
+            $query
+                    ->leftJoin(
+                            \DB::raw('(SELECT inventori_id, created_at FROM maintenance_inventories GROUP BY inventori_id, created_at ORDER BY id DESC LIMIT 1) as last_maintenance_inventories'),
+                            'inventories.id', '=', 'last_maintenance_inventories.inventori_id')
+//                    ->where(function($q) {
+//                        $q->where(\DB::raw('DATEDIFF(NOW(),maintenance_inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori');
+////                                ->or;
+//                    })
+//                    ->where(function($q) {
+//                        
+//                        $q->where(function($q) {
+//                            $q->whereNotNull('last_maintenance_inventories.created_at')
+//                                ->where(\DB::raw('DATEDIFF(NOW(),last_maintenance_inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori');
+//                        })
+//                        ->orWhere(\DB::raw('DATEDIFF(NOW(),inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori');
+//                    })
+                                ->where(\DB::raw('DATEDIFF(NOW(),last_maintenance_inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori')
+                      ->orWhere(function($q) {
+                            $q->whereNull('last_maintenance_inventories.created_at')
+                                    ->where(\DB::raw('DATEDIFF(NOW(),inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori');
+                    })
+                    ->select('inventories.*');
+                    
+                    
+                    
+//                    ->join('maintenance_inventories', 'inventories.id', '=', 'maintenance_inventories.inventori_id')
+//                    ->select('inventories.*')
+//                    ->where(function($q) {
+//                        
+//                    });
+//                    ->where('inventories.created_at', '>', ' maintenance_inventories.created_at');
         }
         
+        
+//        exit($query->toSql());
 
 
         $inventoris = $query->paginate(20);
+        
+//        $inventories = $query->get();
 
         return $this->formatCollection($inventoris, [], $inventoris);
     }
@@ -69,7 +100,7 @@ class InventoriController extends Controller {
         if ($validation !== true) {
             return $this->formatErrors($validation);
         }
-
+        
         $inventori->action()->onCreateAndUpdate();
         $inventori->action()->onGenerateUuidAndQrCode();
 
