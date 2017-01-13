@@ -31,47 +31,18 @@ class InventoriController extends Controller {
         
         if ($request->has('maintenance_pending')){
             
-            $query
-                    ->leftJoin(
-                            \DB::raw('(SELECT inventori_id, created_at FROM maintenance_inventories GROUP BY inventori_id, created_at ORDER BY id DESC LIMIT 1) as last_maintenance_inventories'),
+            $query->join(\DB::raw('(SELECT t1.inventori_id, t1.created_at AS last_maintenance_at FROM (SELECT * FROM maintenance_inventories ORDER BY id DESC) AS t1 GROUP BY t1.inventori_id, t1.created_at) as last_maintenance_inventories'),
                             'inventories.id', '=', 'last_maintenance_inventories.inventori_id')
-//                    ->where(function($q) {
-//                        $q->where(\DB::raw('DATEDIFF(NOW(),maintenance_inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori');
-////                                ->or;
-//                    })
-//                    ->where(function($q) {
-//                        
-//                        $q->where(function($q) {
-//                            $q->whereNotNull('last_maintenance_inventories.created_at')
-//                                ->where(\DB::raw('DATEDIFF(NOW(),last_maintenance_inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori');
-//                        })
-//                        ->orWhere(\DB::raw('DATEDIFF(NOW(),inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori');
-//                    })
-                                ->where(\DB::raw('DATEDIFF(NOW(),last_maintenance_inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori')
-                      ->orWhere(function($q) {
-                            $q->whereNull('last_maintenance_inventories.created_at')
-                                    ->where(\DB::raw('DATEDIFF(NOW(),inventories.created_at)'), '>', 'inventories.jadwal_maintenance_inventori');
-                    })
-                    ->select('inventories.*');
-                    
-                    
-                    
-//                    ->join('maintenance_inventories', 'inventories.id', '=', 'maintenance_inventories.inventori_id')
-//                    ->select('inventories.*')
-//                    ->where(function($q) {
-//                        
-//                    });
-//                    ->where('inventories.created_at', '>', ' maintenance_inventories.created_at');
+                    ->where(\DB::raw('DATEDIFF(NOW(),last_maintenance_inventories.last_maintenance_at)'), '>', \DB::raw('inventories.jadwal_maintenance_inventori'))
+                    ->orWhere(\DB::raw('DATEDIFF(NOW(),inventories.created_at)'), '>', \DB::raw('inventories.jadwal_maintenance_inventori'))
+//                    ->select('inventories.*');
+                    ->select('inventories.*', 'last_maintenance_inventories.*');
         }
         
-        
-//        exit($query->toSql());
-
+        exit(json_encode($query->get()));
 
         $inventoris = $query->paginate(20);
         
-//        $inventories = $query->get();
-
         return $this->formatCollection($inventoris, [], $inventoris);
     }
 
