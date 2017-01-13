@@ -17,14 +17,18 @@ app
 		var env = window.location.hostname == '192.168.0.227' ? 'dev' : 'prod';
 
 		var domains = {
-		
+			inventori: window.location.origin + '/',
 			account: 'https://accounts.xolura.com/',
 		}
 
 		var apps = {
-			
 			authentication: domains.account + 'views/user/',
-		};
+			inventori: {
+				api: domains.inventori + 'api/',
+				report: domains.inventori + 'report/',
+			}
+
+		}
 
 		return {
 
@@ -34,8 +38,16 @@ app
 				
 
 			},
+
 			entity: {
 				base: 'https://entity.hondagelora.com/'
+			},
+
+			inventori: {
+				inventori: {
+					api: apps.inventori.api + 'inventori/',
+					report: apps.inventori.report + 'inventori/'
+				}
 			}
 		}
 
@@ -914,7 +926,7 @@ app
 app
         .controller('InventoriIndexController', function (
                 InventoriModel,
-                ConfigModel,
+                ConfigModel, JwtValidator, LinkFactory,
                 $state,
                 $stateParams) {
             var vm = this;
@@ -924,8 +936,6 @@ app
                 console.log(vm.filter)
 
             vm.get = function (page) {
-
-                console.log(vm.filter)
 
                 if (page) {
                     vm.filter.page = page;
@@ -949,6 +959,12 @@ app
                         })
             }
             vm.get();
+
+            vm.download = function() {
+
+                vm.filter.jwt = JwtValidator.encodedJwt
+                window.open(LinkFactory.inventori.inventori.report + '?' + $.param(vm.filter))
+            }
 
 
             function assignKondisiToInventori() {

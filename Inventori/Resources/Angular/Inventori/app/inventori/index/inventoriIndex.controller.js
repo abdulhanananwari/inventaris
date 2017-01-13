@@ -1,7 +1,7 @@
 app
         .controller('InventoriIndexController', function (
                 InventoriModel,
-                ConfigModel,
+                ConfigModel, JwtValidator, LinkFactory,
                 $state,
                 $stateParams) {
             var vm = this;
@@ -11,8 +11,6 @@ app
                 console.log(vm.filter)
 
             vm.get = function (page) {
-
-                console.log(vm.filter)
 
                 if (page) {
                     vm.filter.page = page;
@@ -36,6 +34,12 @@ app
                         })
             }
             vm.get();
+
+            vm.download = function() {
+
+                vm.filter.jwt = JwtValidator.encodedJwt
+                window.open(LinkFactory.inventori.inventori.report + '?' + $.param(vm.filter))
+            }
 
 
             function assignKondisiToInventori() {
