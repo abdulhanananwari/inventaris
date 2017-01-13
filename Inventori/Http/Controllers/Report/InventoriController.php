@@ -26,6 +26,10 @@ class InventoriController extends Controller {
         
         $inventoris = $query->get();
         
+        $inventoris->each(function($inventori) {
+            $inventori->url = url('redirect-angular/inventori/' . $inventori->id);
+        });
+        
         return $this->createCsv($inventoris->toArray(), 'inventori');
     }
 }
