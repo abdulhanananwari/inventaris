@@ -22,13 +22,16 @@ app
                 template: 'app/inventori/print/thermal.html'
             }
             vm.print = function() {
+                
+                var w = window.open();
+                    w.document.write($('#printarea').html());
+
                 window.setTimeout(function() {
 
-                    var w = window.open();
-                    w.document.write($('#printarea').html());
+                    
                     w.print();
                     w.close();
-                }, 500);
+                }, 2000);
             }
             
             vm.store = function (inventori) {

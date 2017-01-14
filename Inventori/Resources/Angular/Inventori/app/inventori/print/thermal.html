@@ -1,64 +1,15 @@
 
-<style type="text/css">
-	@page {
-		size: auto;
-		margin: 0mm 0mm 0mm 0mm;
-	}
+	<link rel="stylesheet" type="text/css" href="/standard/printing/pos58.css">
 
-	#printarea {
-		margin: 0px;
-		width: 100%;
-	}
-
-	.headers {
-		font-family: 'Arial';
-		text-align: center;
-	}
-	
-	.contents {
-		font-family: 'Courier New' !important;
-		font-size: 9px;
-	}
-
-	.super-small {
-		font-size: 70%;
-	}
-
-	hr {
-		margin-top: 1px;
-		margin-bottom: 1px;
-	}
-
-	.pull-right {
-		float: right !important;
-		text-align: right !important;
-	}
-
-	.close-paragraph {
-		margin: 0;
-		padding: 0;
-		border: 0;
-	}
-
-	.close-paragraph-top-only {
-		margin-top: 0;
-		padding: 0;
-		border: 0;
-		margin-bottom: 5px;
-	}
-
-	.text-center {
-		text-align: center;
-	}
-	
-	
-</style>
-
-<div class="container">
-	<div>
-	 	<img  id="printarea" ng-src="{{ctrl.inventori.url_qrcode}}">
-	</div>
-	<div class="headers">
-		<p>{{ctrl.inventori.id}}</p>
-	</div>
-</div>
+	<table id="printarea">
+		<tr>
+			<td class="half-width">
+				<img ng-src="{{ctrl.inventori.url_qrcode}}">
+			</td>
+			<td class="half-width">
+				<p class="contents">ID : {{ctrl.inventori.id}}</p>
+				<p class="contents">{{ctrl.inventori.nama}}</p>
+				<p class="contents">{{ctrl.inventori.nama_lokasi}}</p>
+			</td>
+		</tr>
+	</table>
