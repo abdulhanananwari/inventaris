@@ -41,6 +41,11 @@ app
                 window.open(LinkFactory.inventori.inventori.report + '?' + $.param(vm.filter))
             }
 
+            vm.scan = function() {
+                window.open('zxing://scan/?ret=' + encodeURIComponent($state.href('inventoriScan', {}, {absolute: true}) + '{CODE}'))
+                
+            }
+
 
             function assignKondisiToInventori() {
 

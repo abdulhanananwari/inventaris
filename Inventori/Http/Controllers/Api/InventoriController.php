@@ -23,6 +23,10 @@ class InventoriController extends Controller {
     public function index(Request $request) {
 
         $query = $this->inventori->newQuery();
+        
+        if ($request->has('uuid')) {
+            $query->where('uuid', $request->get('uuid'));
+        }
 
         if ($request->has('maintenance_pending')){
             

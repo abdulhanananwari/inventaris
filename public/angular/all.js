@@ -11,6 +11,12 @@
 
 		return appFactory;
 	})
+	.config(['$compileProvider', function( $compileProvider )
+		{   
+	        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|whatsapp|zxing|chrome-extension):/);
+	        // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
+	    }
+	]);
 app
 	.factory('LinkFactory', function() {
 
@@ -79,6 +85,11 @@ app
  			url:'/inventori/show/:id',
  			templateUrl: 'app/inventori/show/inventoriShow.html',
  			controller: 'InventoriShowController as ctrl'
+ 		})
+ 		.state('inventoriScan', {
+ 			url:'/inventori/scan/:uuid',
+ 			templateUrl: 'app/inventori/scan/inventoriScan.html',
+ 			controller: 'InventoriScanController as ctrl'
  		})
  		.state('maintenanceIndex', {
  			url:'/maintenance/index',
@@ -966,6 +977,11 @@ app
                 window.open(LinkFactory.inventori.inventori.report + '?' + $.param(vm.filter))
             }
 
+            vm.scan = function() {
+                window.open('zxing://scan/?ret=' + encodeURIComponent($state.href('inventoriScan', {}, {absolute: true}) + '{CODE}'))
+                
+            }
+
 
             function assignKondisiToInventori() {
 
@@ -1026,6 +1042,31 @@ app
 
         });
 		
+app
+    .controller('InventoriShowController', function (
+        InventoriModel, $state) {
+
+            var vm = this;
+
+            InventoriModel.index({uuid: $state.params.uuid })
+            .success(function(data) {
+
+                if (data.data.length >= 1) {
+
+                    $state.go('inventoriShow', {id: data.data[0].id})
+
+                } else {
+
+                    alert('Inventori tidak ditemukan')
+                    $state.go('inventoriIndex')
+                    
+                }
+
+            })
+        })
+            
+
+           
 app
         .controller('InventoriShowController', function (InventoriModel,
                 MaintenanceInventoriModel,

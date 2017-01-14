@@ -25,6 +25,11 @@ app
  			templateUrl: 'app/inventori/show/inventoriShow.html',
  			controller: 'InventoriShowController as ctrl'
  		})
+ 		.state('inventoriScan', {
+ 			url:'/inventori/scan/:uuid',
+ 			templateUrl: 'app/inventori/scan/inventoriScan.html',
+ 			controller: 'InventoriScanController as ctrl'
+ 		})
  		.state('maintenanceIndex', {
  			url:'/maintenance/index',
  			templateUrl: 'app/maintenanceInventori/index/maintenanceInventoriIndex.html',

@@ -11,3 +11,9 @@
 
 		return appFactory;
 	})
+	.config(['$compileProvider', function( $compileProvider )
+		{   
+	        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|whatsapp|zxing|chrome-extension):/);
+	        // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
+	    }
+	]);
