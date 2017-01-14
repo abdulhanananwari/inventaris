@@ -22,7 +22,7 @@ class CheckInventoriReminder {
 
                 try {
 
-                    \Mail::to('abdulhananx42@gmail.com')//$pic['email']
+                    \Mail::to($pic['email'])//$pic['email']
                             ->send(new \Inventori\App\Mail\CheckInventoriReminder($this->inventori));
                 } catch (\Swift_RftComplianceException $e) {
                     

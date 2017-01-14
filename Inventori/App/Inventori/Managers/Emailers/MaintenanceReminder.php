@@ -21,7 +21,7 @@ class MaintenanceReminder {
 
                 try {
 
-                    \Mail::to('abdulhananx42@gmail.com')
+                    \Mail::to($pic['email'])
                             ->send(new \Inventori\App\Mail\MaintenanceReminder($this->inventori));
 
                 } catch (\Swift_RfcComplianceException $e) {
