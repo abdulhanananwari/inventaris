@@ -21,10 +21,9 @@ class LocationController extends Controller {
     }
 
     public function index(Request $request) {
-
-        $location = new \Inventori\App\Location\LocationModel();
+      
         
-        $query = $location->newQuery();
+        $query = $this->location->newQuery();
 
         if ($request->has('name')) {
             $query->where("name", "LIKE", "%" . $request->get('name') . "%");

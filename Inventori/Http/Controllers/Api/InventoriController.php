@@ -39,6 +39,21 @@ class InventoriController extends Controller {
                     ->select('inventories.*');
                     
         }
+        if ($request->has('check_inventori_pending')){
+            
+            $query->leftJoin(\DB::raw('(SELECT t1.inventori_id, MAX(t1.created_at) AS last_check_inventori_at FROM (SELECT * FROM check_inventories ORDER BY id DESC) AS t1 GROUP BY t1.inventori_id) as last_check_inventories'),
+                            'inventories.id', '=', 'last_check_inventories.inventori_id')
+                    ->where(function($q) {
+                        $q->whereNotNull('last_check_inventories.last_check_inventori_at')
+                            ->where(\DB::raw('DATEDIFF(NOW(),last_check_inventories.last_check_inventori_at)'), '>', \DB::raw('inventories.jadwal_check_inventori'));
+                    })
+                    ->orWhere(function($q) {
+                        $q->whereNull('last_check_inventories.last_check_inventori_at')
+                            ->where(\DB::raw('DATEDIFF(NOW(),inventories.created_at)'), '>', \DB::raw('inventories.jadwal_check_inventori'));
+                    })
+                    ->select('inventories.*');
+                    
+        }
         
 
         if ($request->has('nama')) {

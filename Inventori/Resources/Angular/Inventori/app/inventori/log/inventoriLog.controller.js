@@ -31,8 +31,13 @@ app
             }
 
             ConfigModel.get('kondisi')
-                    .success(function (data) {
-                        vm.kondisi = data.data
-                    })
+                .success(function (data) {
+                vm.kondisi = data.data
+            })
+
+             vm.back = function () {
+                $state.go('inventoriShow', {id: $state.params.id })
+            }
+
         });
 		

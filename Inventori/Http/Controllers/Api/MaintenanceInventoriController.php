@@ -20,10 +20,8 @@ class MaintenanceInventoriController extends Controller {
     }
 
     public function index(Request $request) {
-
-        $maintenance = new MaintenanceInventoriModel();
-
-        $query = $maintenance->newQuery();
+        
+        $query = $this->maintenance->newQuery();
 
         if ($request->has('inventori_id')) {
             $query->where('inventori_id', $request->get("inventori_id"));

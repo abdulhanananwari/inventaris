@@ -50,14 +50,15 @@
 	.text-center {
 		text-align: center;
 	}
-	.img {
-		height: 70px;
-		width: auto;
-	}
+	
+	
 </style>
 
 <div class="container">
-
- <img ng-src="{{ctrl.inventori.url_qrcode}}">
-
+	<div>
+	 	<img  id="printarea" ng-src="{{ctrl.inventori.url_qrcode}}">
+	</div>
+	<div class="headers">
+		<p>{{ctrl.inventori.id}}</p>
+	</div>
 </div>

@@ -8,7 +8,7 @@
                 <button class="btn btn-block btn-default" ng-click="ctrl.filter={maintenance_pending:true};ctrl.get()">Maintenance Pending</button>
             </div>
             <div class="col-sm-6">
-                <button class="btn btn-default btn-block">Check Inventori Pending</button>
+                <button class="btn btn-default btn-block" ng-click="ctrl.filter={check_inventori_pending:true};ctrl.get()">Check Inventori Pending</button>
             </div>
         </div>
 
@@ -68,20 +68,6 @@
                         <td>{{inventori.name_pic}}</td>
                         <td><a class="btn btn-primary"
                                ui-sref="inventoriShow({id: inventori.id})">Buka</a></td>
-                    </tr>
-                </tbody>
-            </table>
-            <table>
-                <thead>
-                    <tr>
-                        <th>nama</th>
-                        <th>Jadwal maintenance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{pending.nama}}</td>
-                        <td>{{pending.jadwal_maintenance_inventori}}</td>
                     </tr>
                 </tbody>
             </table>

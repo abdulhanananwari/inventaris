@@ -30,6 +30,7 @@ app
                     w.close();
                 }, 500);
             }
+            
             vm.store = function (inventori) {
                 if (!inventori.id) {
 
@@ -48,7 +49,7 @@ app
                 }
             }
             vm.reset = function () {
-
+                $state.go('inventoriShow', {id: ''}, {reload: true})
             }
 
             vm.addPic = function (pic) {

@@ -26,7 +26,7 @@ class OnGenerateUuidAndQrCode {
     
     protected function generateUuid() {
         
-        $this->inventori->uuid = \Solumax\PhpHelper\Helpers\UuidGenerator::generate(10);
+        $this->inventori->uuid = \Solumax\PhpHelper\Helpers\UuidGenerator::generate();
     }
     
     protected function generateAndUploadQrCode() {
