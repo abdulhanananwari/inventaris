@@ -198,10 +198,11 @@
                 </div>
             </div>
             <div ng-if="ctrl.inventori.id" class="col-sm-6">
-                <button class="btn btn-primary btn-block" ui-sref="inventoriLog({id: ctrl.inventori.id})">History</button>
+                <button class="btn btn-primary btn-block" ui-sref="inventoriLog({id: ctrl.inventori.id})">History</button><br>
         </div>
+        
         <div ng-if="ctrl.inventori.id" class="col-sm-6">
-            <button class="btn btn-block btn-default" ng-click="ctrl.print()">Print</button>
+            <button class="btn btn-block btn-warning" ng-click="ctrl.print()">Print</button>
         </div>
         </div>
     </div>

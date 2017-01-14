@@ -8,7 +8,14 @@
                 <button class="btn btn-block btn-default" ng-click="ctrl.filter={maintenance_pending:true};ctrl.get()">Maintenance Pending</button>
             </div>
             <div class="col-sm-6">
-                <button class="btn btn-default btn-block">Check Inventori Pending</button>
+                <button class="btn btn-default btn-block" ng-click="ctrl.filter={check_inventori_pending:true};ctrl.get()">Check Inventori Pending</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+                <button class="btn btn-block btn-default" ng-click="ctrl.filter={};ctrl.download()">Download</button>
             </div>
         </div>
 
