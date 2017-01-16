@@ -16,12 +16,12 @@ class OnCreateAndUpdate {
 
     	$inventori = $this->inventori;
 
-    	\DB::transaction function($inventori){
+    	\DB::transaction (function($inventori){
 
-    	$inventori->save();
-        \SolLog::write('Inventori', $inventori->id, 'Inventori save', $inventori->toArray());
+    	$this->inventori->save();
+        \SolLog::write('Inventori', $this->inventori->id, 'Inventori save', $this->inventori->toArray());
 
-    	}
+    	});
 
        
     }
