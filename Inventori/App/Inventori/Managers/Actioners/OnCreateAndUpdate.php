@@ -14,7 +14,6 @@ class OnCreateAndUpdate {
 
     public function action() {
 
-    	$inventori = $this->inventori;
 
     	\DB::transaction (function($inventori){
 
