@@ -20,12 +20,13 @@ class CreateInventoriesTable extends Migration
             $table->string('kondisi');
             $table->date('rencana_tanggal_peremajaan')->nullable();
             $table->binary('photos')->nullable();
-            $table->integer('jumlah')->unsigned();
-            $table->integer('id_lokasi')->unsigned();
+            $table->integer('jumlah')->unsigned()->nullable()->default(1);
+            $table->integer('id_lokasi')->unsigned()->nullable();
             $table->date('tanggal_pembelian')->nullable();
-            $table->integer('estimasi_biaya')->unsigned();
+            $table->integer('estimasi_biaya')->unsigned()->nullable();
             $table->binary('pic')->nullable();
-
+            $table->string('keterangan_check')->nullable();
+            $table->string('keterangan_maintenance')->nullable();
             $table->integer('jadwal_check_inventori')->unsigned()->nullable();
             $table->integer('jadwal_maintenance_inventori')->unsigned()->nullable();
             $table->timestamps();

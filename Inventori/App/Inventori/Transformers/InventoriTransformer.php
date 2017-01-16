@@ -28,6 +28,8 @@ class InventoriTransformer extends Fractal\TransformerAbstract {
             'pic' => $inventori->pic ? json_decode($inventori->pic, true) : [],
             'uuid' => $inventori->uuid,
             'url_qrcode' => $inventori->url_qrcode,
+            'keterangan_check'=> $inventori->keterangan_check,
+            'keterangan_maintenance'=>$inventori->keterangan_maintenance,
         ];
     }
 
