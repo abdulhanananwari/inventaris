@@ -25,11 +25,11 @@ class OnCreateAndUpdate {
     protected function validateAttributes() {
 
         return \Validator::make($this->inventori->toArray(), [
-                    'nama' => 'required',
-                    "tanggal_pembelian" => 'required',
+                    'nama' => 'required',/*
+                    "tanggal_pembelian" => 'required',*/
                     "jumlah" => 'required|numeric',
-                    "estimasi_biaya" => 'required|numeric',
-                    "id_lokasi" => 'required',
+                    /*"estimasi_biaya" => 'required|numeric',*/
+                    /*"id_lokasi" => 'required',*/
         ]);
     }
 
