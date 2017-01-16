@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return redirect('/Angular/Inventori/index.html');
+    return redirect('/angular/Inventori/index.html');
 });

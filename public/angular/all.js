@@ -1043,7 +1043,7 @@ app
         });
 		
 app
-    .controller('InventoriShowController', function (
+    .controller('InventoriScanController', function (
         InventoriModel, $state) {
 
             var vm = this;

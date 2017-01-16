@@ -14,7 +14,7 @@ class AddUuidToInventoriesTable extends Migration
     public function up()
     {
         Schema::table('inventories', function (Blueprint $table) {
-            $table->string('uuid')->index()->unique();
+            $table->string('uuid')->nuulable()->index()->unique();
         });
     }
 
