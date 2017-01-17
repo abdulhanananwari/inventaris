@@ -131,6 +131,7 @@ app
                     reset: {show: true}
                 }),
                 additionalData: JSON.stringify({
+                    image: {resize: {height: 1500, width: 1500}},
                     path: 'inventori',
                     subpath: $state.params.id,
                     fileable_type: 'Inventori',
