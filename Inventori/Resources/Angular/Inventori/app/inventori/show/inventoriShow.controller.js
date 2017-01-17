@@ -23,11 +23,11 @@ app
             }
             vm.print = function() {
                 
-                var w = window.open();
-                    w.document.write($('#printarea').html());
+                 var w = window.open();
 
                 window.setTimeout(function() {
-
+                   
+                    w.document.write($('#printarea').html());
                     
                     w.print();
                     w.close();
