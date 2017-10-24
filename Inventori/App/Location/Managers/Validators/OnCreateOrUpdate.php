@@ -20,7 +20,7 @@ class OnCreateOrUpdate {
             return $attributeValidation->errors()->all();
         }
 
-        if (!$this->cekNamaMasihBelumDipakai()) {
+        if ($this->cekNamaMasihBelumDipakai()) {
             return ['Nama sudah dipakai'];
         }
 
